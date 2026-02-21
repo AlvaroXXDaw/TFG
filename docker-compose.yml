@@ -1,0 +1,44 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: emily-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-emily}
+      POSTGRES_USER: ${POSTGRES_USER:-emily}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-emily}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-emily} -d ${POSTGRES_DB:-emily}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: emily-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-emily}
+      DB_USERNAME: ${POSTGRES_USER:-emily}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-emily}
+      PORT: 8080
+      JWT_SECRET: ${JWT_SECRET}
+      CORS_ORIGINS: ${CORS_ORIGINS:-https://emily-mu-three.vercel.app}
+      FRONTEND_URL: ${FRONTEND_URL:-https://emily-mu-three.vercel.app}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_OVERRIDE_TO: ${MAIL_OVERRIDE_TO:-}
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data:
