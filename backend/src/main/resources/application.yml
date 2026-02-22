@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: emily-backend
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  flyway:
+    enabled: true
+    validate-on-migrate: false
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
+server:
+  port: ${PORT:8080}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration-ms: 86400000
+  cors:
+    allowed-origins: ${CORS_ORIGINS:https://emily-mu-three.vercel.app}
+  frontend-url: ${FRONTEND_URL:https://emily-mu-three.vercel.app}
+  mail:
+    override-to: ${MAIL_OVERRIDE_TO:}
