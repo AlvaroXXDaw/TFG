@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+html, body {
+  touch-action: manipulation; /* Permite scroll y pellizco, bloquea doble-toque */
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #ffffff;
+  color: #0a0a0a;
+  -webkit-font-smoothing: antialiased;
+}
+
+a,
+button,
+select,
+label[for],
+[role="button"],
+summary,
+input,
+textarea {
+  cursor: pointer;
+  touch-action: manipulation;
+}
