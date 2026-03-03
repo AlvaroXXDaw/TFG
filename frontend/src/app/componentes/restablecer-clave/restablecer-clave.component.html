@@ -1,0 +1,104 @@
+<div class="min-h-screen bg-white flex flex-col justify-center relative">
+  <a routerLink="/login" class="absolute top-8 left-6 lg:left-12 flex items-center text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 hover:text-emerald-950 transition-colors">
+    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+    Volver al login
+  </a>
+
+  <div class="w-full max-w-md mx-auto px-6">
+    @if (!success()) {
+      <div class="mb-16 text-center">
+        <h2 class="text-4xl font-light tracking-tighter text-emerald-950 uppercase mb-4">
+          Nueva contraseña
+        </h2>
+        <p class="text-sm font-light text-gray-500">
+          Introduce tu nueva contraseña para recuperar el acceso.
+        </p>
+      </div>
+
+      <form class="space-y-8" #resetForm="ngForm" (ngSubmit)="submitResetPassword(resetForm)">
+        <div class="relative">
+          <input
+            [(ngModel)]="newPassword"
+            #newPasswordModel="ngModel"
+            name="newPassword"
+            type="password"
+            id="newPassword"
+            class="block w-full border-0 border-b border-gray-200 py-4 text-emerald-950 placeholder-transparent focus:border-emerald-950 focus:ring-0 peer bg-transparent transition-colors"
+            placeholder="Nueva contraseña"
+            required
+            [minlength]="minPasswordLength"
+          >
+          <label for="newPassword" class="absolute left-0 -top-3.5 text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-4 peer-placeholder-shown:font-light peer-placeholder-shown:tracking-normal peer-focus:-top-3.5 peer-focus:text-xs peer-focus:font-semibold peer-focus:tracking-[0.1em] peer-focus:text-emerald-950">
+            Nueva contraseña
+          </label>
+
+          @if (newPasswordModel.invalid && (newPasswordModel.dirty || newPasswordModel.touched)) {
+            @if (newPasswordModel.errors?.['required']) {
+              <p class="mt-2 text-xs text-red-600">La contraseña es obligatoria.</p>
+            }
+            @if (newPasswordModel.errors?.['minlength']) {
+              <p class="mt-2 text-xs text-red-600">Debe tener al menos {{ minPasswordLength }} caracteres.</p>
+            }
+          }
+        </div>
+
+        <div class="relative">
+          <input
+            [(ngModel)]="confirmPassword"
+            #confirmPasswordModel="ngModel"
+            name="confirmPassword"
+            type="password"
+            id="confirmPassword"
+            class="block w-full border-0 border-b border-gray-200 py-4 text-emerald-950 placeholder-transparent focus:border-emerald-950 focus:ring-0 peer bg-transparent transition-colors"
+            placeholder="Confirmar contraseña"
+            required
+          >
+          <label for="confirmPassword" class="absolute left-0 -top-3.5 text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-4 peer-placeholder-shown:font-light peer-placeholder-shown:tracking-normal peer-focus:-top-3.5 peer-focus:text-xs peer-focus:font-semibold peer-focus:tracking-[0.1em] peer-focus:text-emerald-950">
+            Confirmar contraseña
+          </label>
+
+          @if (confirmPasswordModel.invalid && (confirmPasswordModel.dirty || confirmPasswordModel.touched)) {
+            <p class="mt-2 text-xs text-red-600">Debes confirmar la contraseña.</p>
+          }
+
+          @if (confirmPassword && newPassword && confirmPassword !== newPassword) {
+            <p class="mt-2 text-xs text-red-600">Las contraseñas no coinciden.</p>
+          }
+        </div>
+
+        @if (errorMessage()) {
+          <p class="text-sm text-red-600 bg-red-50 border border-red-200 px-4 py-3">
+            {{ errorMessage() }}
+          </p>
+        }
+
+        <button
+          [disabled]="loading() || resetForm.invalid || confirmPassword !== newPassword"
+          type="submit"
+          class="w-full bg-emerald-950 text-white py-5 text-xs font-semibold tracking-[0.2em] uppercase hover:bg-emerald-900 transition-colors mt-8 disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          @if (loading()) {
+            Guardando...
+          } @else {
+            Cambiar contraseña
+          }
+        </button>
+      </form>
+    } @else {
+      <div class="text-center">
+        <div class="w-20 h-20 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-8 mx-auto">
+          <svg class="w-8 h-8 text-emerald-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7"></path></svg>
+        </div>
+        <h2 class="text-4xl font-light tracking-tighter text-emerald-950 uppercase mb-4">
+          Contrasena actualizada
+        </h2>
+        <p class="text-sm font-light text-gray-500 mb-12 leading-relaxed">
+          Tu contraseña se cambió correctamente. Ya puedes iniciar sesión.
+        </p>
+        <a routerLink="/login" class="inline-block bg-emerald-950 text-white px-10 py-4 text-xs font-semibold tracking-[0.2em] uppercase hover:bg-emerald-900 transition-colors">
+          Ir al login
+        </a>
+      </div>
+    }
+  </div>
+</div>
