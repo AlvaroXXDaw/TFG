@@ -1,0 +1,121 @@
+<div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-12">
+  <div class="mb-12">
+    <h2 class="text-4xl font-light tracking-tighter text-emerald-950 uppercase mb-2">Gestión de Pistas</h2>
+    <p class="text-gray-500 font-light">Añade o elimina instalaciones deportivas.</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Formulario Añadir -->
+    <div class="bg-white border border-black/5 p-6 md:p-8 h-fit">
+      <h3 class="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-8">Añadir Nueva Pista</h3>
+
+      <form (submit)="addCourt($event)" class="space-y-6">
+        <div>
+          <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Nombre de la Pista</span>
+          <input type="text" [(ngModel)]="newCourt.name" name="name" required placeholder="Ej: Pista Cristal Central"
+            class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm">
+        </div>
+
+        <div>
+          <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Deporte</span>
+          <select [(ngModel)]="newCourt.sport" name="sport" required
+            class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm">
+            <option value="PADEL">Pádel</option>
+            <option value="FUTBOL">Fútbol</option>
+          </select>
+        </div>
+
+        <button type="submit"
+          class="w-full bg-emerald-950 text-white py-4 text-xs font-semibold tracking-[0.2em] uppercase hover:bg-emerald-900 transition-colors mt-4">
+          Registrar Pista
+        </button>
+      </form>
+    </div>
+
+    <!-- Directorio de Pistas -->
+    <div class="lg:col-span-2 bg-white border border-black/5 p-6 md:p-8">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+        <h3 class="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400">Pistas Existentes</h3>
+
+        <!-- Filtro por deporte -->
+        <div class="flex gap-2">
+          <button (click)="filterBySport(null)"
+            [class.bg-emerald-950]="selectedSport() === null"
+            [class.text-white]="selectedSport() === null"
+            [class.border-emerald-950]="selectedSport() === null"
+            [class.text-emerald-950]="selectedSport() !== null"
+            [class.border-black/10]="selectedSport() !== null"
+            [class.hover:border-emerald-950]="selectedSport() !== null"
+            class="px-4 py-2 text-[10px] font-semibold tracking-[0.15em] uppercase border transition-colors">
+            Todas
+          </button>
+          <button (click)="filterBySport('PADEL')"
+            [class.bg-emerald-950]="selectedSport() === 'PADEL'"
+            [class.text-white]="selectedSport() === 'PADEL'"
+            [class.border-emerald-950]="selectedSport() === 'PADEL'"
+            [class.text-emerald-950]="selectedSport() !== 'PADEL'"
+            [class.border-black/10]="selectedSport() !== 'PADEL'"
+            [class.hover:border-emerald-950]="selectedSport() !== 'PADEL'"
+            class="px-4 py-2 text-[10px] font-semibold tracking-[0.15em] uppercase border transition-colors">
+            Pádel
+          </button>
+          <button (click)="filterBySport('FUTBOL')"
+            [class.bg-emerald-950]="selectedSport() === 'FUTBOL'"
+            [class.text-white]="selectedSport() === 'FUTBOL'"
+            [class.border-emerald-950]="selectedSport() === 'FUTBOL'"
+            [class.text-emerald-950]="selectedSport() !== 'FUTBOL'"
+            [class.border-black/10]="selectedSport() !== 'FUTBOL'"
+            [class.hover:border-emerald-950]="selectedSport() !== 'FUTBOL'"
+            class="px-4 py-2 text-[10px] font-semibold tracking-[0.15em] uppercase border transition-colors">
+            Fútbol
+          </button>
+        </div>
+      </div>
+
+      <!-- Listado de pistas -->
+      <div class="flex flex-col gap-4">
+        @for (court of courts(); track court.id) {
+          <div class="border border-black/5 bg-gray-50/50 p-5 rounded-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+              <h4 class="font-medium text-emerald-950 text-base mb-1">{{ court.name }}</h4>
+              <div class="flex items-center gap-3 mt-2">
+                <span class="px-3 py-1 text-[10px] font-semibold tracking-wider uppercase rounded-sm"
+                      [class.bg-emerald-100]="court.sport === 'PADEL'" [class.text-emerald-800]="court.sport === 'PADEL'"
+                      [class.bg-amber-100]="court.sport === 'FUTBOL'" [class.text-amber-800]="court.sport === 'FUTBOL'">
+                  {{ court.sport === 'PADEL' ? 'Pádel' : 'Fútbol' }}
+                </span>
+                <span class="text-xs text-gray-400">Añadida el: {{ court.createdAt | slice:0:10 }}</span>
+              </div>
+            </div>
+
+            <!-- Botón eliminar: dos fases -->
+            @if (confirmingDeleteId() === court.id) {
+              <div class="flex items-center gap-2 md:w-auto w-full">
+                <span class="text-[10px] font-semibold tracking-[0.1em] uppercase text-red-600 mr-2">¿Eliminar?</span>
+                <button (click)="confirmDelete(court.id)"
+                  class="text-[10px] font-semibold tracking-[0.1em] uppercase text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-sm transition-colors">
+                  Sí, eliminar
+                </button>
+                <button (click)="cancelDelete()"
+                  class="text-[10px] font-semibold tracking-[0.1em] uppercase text-gray-500 hover:text-gray-700 bg-white border border-black/10 hover:border-black/20 px-4 py-2 rounded-sm transition-colors">
+                  Cancelar
+                </button>
+              </div>
+            } @else {
+              <button (click)="requestDelete(court.id)"
+                class="text-[10px] font-semibold tracking-[0.1em] uppercase text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 border border-red-100 px-4 py-2 rounded-sm transition-colors md:w-auto w-full text-center">
+                Eliminar
+              </button>
+            }
+          </div>
+        }
+
+        @if (courts().length === 0) {
+          <div class="py-12 text-center text-gray-400 font-light text-sm bg-gray-50/50 border border-black/5 rounded-sm">
+            No hay pistas registradas{{ selectedSport() ? ' para este deporte' : '' }}.
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
