@@ -1,0 +1,11 @@
+/* The wrapper needs enough height for the sticky element to stay pinned
+   while the user scrolls. 300vh gives plenty of vertical scroll runway
+   for all 10 photos to be revealed horizontally. */
+.horizontal-scroll-wrapper {
+  height: 300vh;
+}
+
+.horizontal-track {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
