@@ -1,0 +1,208 @@
+﻿    <div class="min-h-screen bg-[#f8f9fa] pt-24">
+      @if (!auth.isLoggedIn()) {
+        <div class="h-[calc(100vh-6rem)] flex flex-col items-center justify-center text-center px-6">
+          <div class="w-20 h-20 rounded-full bg-white border border-black/5 flex items-center justify-center mb-8 shadow-sm">
+            <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+          </div>
+          <h2 class="text-4xl font-light tracking-tighter text-emerald-950 uppercase mb-4">Acceso Restringido</h2>
+          <p class="text-gray-500 font-light mb-10 max-w-md text-lg">
+            Para ver tu rutina personalizada y gestionar tu suscripción al gimnasio, inicia sesión.
+          </p>
+          <a routerLink="/login" class="bg-emerald-950 text-white px-10 py-4 text-xs font-semibold tracking-[0.2em] uppercase hover:bg-emerald-900 transition-colors">
+            Iniciar Sesión
+          </a>
+        </div>
+      } @else {
+        <div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-12 lg:py-24">
+          
+          <div class="mb-16 border-b border-black/10 pb-8">
+            <h2 class="text-5xl lg:text-7xl font-light tracking-tighter text-emerald-950 uppercase">
+              Gimnasio
+            </h2>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+            
+            <div class="lg:col-span-4">
+              <div class="bg-white p-8 border border-black/5 mb-8">
+                <h3 class="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-12">Suscripción</h3>
+                
+                <div class="mb-12">
+                  <span class="block text-[6rem] leading-none font-light tracking-tighter text-emerald-950">12</span>
+                  <span class="text-sm font-light text-gray-500">días restantes</span>
+                </div>
+                
+                <div class="space-y-4 pt-8 border-t border-black/5">
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm font-light text-gray-500">Plan</span>
+                    <span class="text-sm font-medium text-emerald-950">Premium</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm font-light text-gray-500">Renovación</span>
+                    <span class="text-sm font-medium text-emerald-950">15 Abr 2026</span>
+                  </div>
+                </div>
+                
+                <button class="mt-12 w-full border border-emerald-950 text-emerald-950 px-6 py-4 text-xs font-semibold tracking-[0.2em] uppercase hover:bg-emerald-950 hover:text-white transition-colors">
+                  Gestionar
+                </button>
+              </div>
+
+              @if (isEditing()) {
+                <div class="bg-white p-8 border border-black/5">
+                  <h3 class="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-8">Configurar Rutina</h3>
+                  
+                  <div class="mb-6">
+                    <span class="block text-sm font-light text-gray-500 mb-2">Días de entrenamiento</span>
+                    <div class="flex items-center space-x-4">
+                      <button (click)="updateDays(-1)" class="w-10 h-10 border border-black/10 flex items-center justify-center hover:bg-gray-50 transition-colors">-</button>
+                      <span class="text-2xl font-light text-emerald-950 w-8 text-center">{{ daysCount() }}</span>
+                      <button (click)="updateDays(1)" class="w-10 h-10 border border-black/10 flex items-center justify-center hover:bg-gray-50 transition-colors">+</button>
+                    </div>
+                  </div>
+
+                  <div class="space-y-2">
+                    @for (day of routineDays(); track day.dayOrder) {
+                      <button 
+                        (click)="selectDay(day.dayOrder)"
+                        [class.bg-emerald-950]="selectedDayId() === day.dayOrder"
+                        [class.text-white]="selectedDayId() === day.dayOrder"
+                        [class.bg-gray-50]="selectedDayId() !== day.dayOrder"
+                        [class.text-emerald-950]="selectedDayId() !== day.dayOrder"
+                        class="w-full text-left px-4 py-3 text-sm font-medium transition-colors border border-transparent hover:border-black/10">
+                        Día {{ day.dayOrder }}
+                      </button>
+                    }
+                  </div>
+                </div>
+              } @else {
+                <div class="bg-white p-8 border border-black/5">
+                  <h3 class="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-8">Días de Entrenamiento</h3>
+                  <div class="space-y-2">
+                    @for (day of routineDays(); track day.dayOrder) {
+                      <button 
+                        (click)="selectDay(day.dayOrder)"
+                        [class.bg-emerald-950]="selectedDayId() === day.dayOrder"
+                        [class.text-white]="selectedDayId() === day.dayOrder"
+                        [class.bg-gray-50]="selectedDayId() !== day.dayOrder"
+                        [class.text-emerald-950]="selectedDayId() !== day.dayOrder"
+                        class="w-full text-left px-4 py-3 text-sm font-medium transition-colors border border-transparent hover:border-black/10 flex justify-between items-center">
+                        <span>Día {{ day.dayOrder }}</span>
+                        @if (day.name) {
+                          <span class="text-xs opacity-70">{{ day.name }}</span>
+                        }
+                      </button>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+
+            <div class="lg:col-span-8">
+              <div class="bg-white p-8 lg:p-12 border border-black/5">
+                <div class="flex justify-between items-end mb-12">
+                  <div>
+                    <h3 class="text-2xl font-light tracking-tight text-emerald-950 mb-2">Rutina Día {{ selectedDayId() }}</h3>
+                    @if (isEditing()) {
+                      <input 
+                        type="text" 
+                        [ngModel]="currentDay()?.name"
+                        (ngModelChange)="updateDayName($event)"
+                        placeholder="Ej: Pecho y Tríceps"
+                        class="text-sm font-light text-gray-500 border-b border-black/10 focus:border-emerald-950 focus:outline-none bg-transparent py-1 w-64 transition-colors">
+                    } @else {
+                      <p class="text-sm font-light text-gray-500">{{ currentDay()?.name || 'Sin nombre' }}</p>
+                    }
+                  </div>
+                  
+                  @if (isEditing()) {
+                    <div class="flex items-center gap-4">
+                      <button (click)="addExercise()" class="text-xs font-semibold tracking-[0.2em] uppercase text-emerald-950 hover:text-emerald-700 transition-colors flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        Añadir Ejercicio
+                      </button>
+                      <button (click)="removeCurrentDay()" class="text-xs font-semibold tracking-[0.2em] uppercase text-red-500 hover:text-red-700 transition-colors">
+                        Eliminar Día
+                      </button>
+                    </div>
+                  } @else {
+                    <button (click)="toggleEdit()" class="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 hover:text-emerald-950 transition-colors flex items-center">
+                      <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                      Editar Rutina
+                    </button>
+                  }
+                </div>
+
+                <div class="space-y-0">
+                  @for (exercise of currentDay()?.exercises; track exercise.id ?? exercise.tempKey ?? i; let i = $index) {
+                    <div class="group flex flex-col md:flex-row md:items-center py-6 border-b border-black/5 hover:border-emerald-950 transition-colors gap-4">
+                      <div class="w-12 text-xs font-semibold tracking-[0.2em] text-gray-300 group-hover:text-emerald-950 transition-colors">
+                        {{ (i + 1).toString().padStart(2, '0') }}
+                      </div>
+                      
+                      <div class="flex-1">
+                        @if (isEditing()) {
+                          <input 
+                            type="text" 
+                            [(ngModel)]="exercise.name"
+                            (ngModelChange)="updateExercise(getExerciseTrackKey(exercise, i), 'name', $event)"
+                            placeholder="Nombre del ejercicio"
+                            class="text-lg font-medium text-emerald-950 bg-transparent border-none p-0 focus:ring-0 w-full placeholder-gray-300">
+                        } @else {
+                          <h4 class="text-lg font-medium text-emerald-950">{{ exercise.name || 'Ejercicio sin nombre' }}</h4>
+                          <p class="text-sm font-light text-gray-500">{{ exercise.sets }} series × {{ exercise.reps }} reps</p>
+                        }
+                      </div>
+                      
+                      <div class="flex flex-wrap items-center gap-4 md:gap-6">
+                        @if (isEditing()) {
+                          <div class="text-center">
+                            <input type="number" [ngModel]="exercise.sets" (ngModelChange)="updateExercise(getExerciseTrackKey(exercise, i), 'sets', $event)" class="w-12 text-center text-sm font-medium text-emerald-950 bg-gray-50 border-none p-1 focus:ring-1 focus:ring-emerald-950">
+                            <span class="block text-[10px] font-light text-gray-400 uppercase tracking-wider mt-1">Series</span>
+                          </div>
+                          <div class="text-center">
+                            <input type="text" [ngModel]="exercise.reps" (ngModelChange)="updateExercise(getExerciseTrackKey(exercise, i), 'reps', $event)" class="w-16 text-center text-sm font-medium text-emerald-950 bg-gray-50 border-none p-1 focus:ring-1 focus:ring-emerald-950">
+                            <span class="block text-[10px] font-light text-gray-400 uppercase tracking-wider mt-1">Reps</span>
+                          </div>
+                          <div class="text-center">
+                            <input type="text" [ngModel]="exercise.rest" (ngModelChange)="updateExercise(getExerciseTrackKey(exercise, i), 'rest', $event)" class="w-16 text-center text-sm font-medium text-emerald-950 bg-gray-50 border-none p-1 focus:ring-1 focus:ring-emerald-950">
+                            <span class="block text-[10px] font-light text-gray-400 uppercase tracking-wider mt-1">Descanso</span>
+                          </div>
+                          <button (click)="removeExercise(getExerciseTrackKey(exercise, i))" class="text-gray-300 hover:text-red-500 transition-colors p-2 ml-auto md:ml-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                          </button>
+                        } @else {
+                          <div class="text-left md:text-right w-full md:w-auto">
+                            <span class="block text-sm font-medium text-emerald-950">{{ exercise.rest }}</span>
+                            <span class="text-xs font-light text-gray-400">descanso</span>
+                          </div>
+                        }
+                      </div>
+                    </div>
+                  }
+
+                  @if (currentDay()?.exercises?.length === 0) {
+                    <div class="py-12 text-center text-gray-400 font-light">
+                      No hay ejercicios en este día. @if(isEditing()) { Añade uno para empezar. }
+                    </div>
+                  }
+                </div>
+                
+                @if (isEditing()) {
+                  <div class="mt-12 text-right">
+                    <button (click)="toggleEdit()" class="bg-emerald-950 text-white px-8 py-4 text-xs font-semibold tracking-[0.2em] uppercase hover:bg-emerald-900 transition-colors">
+                      Guardar Rutina
+                    </button>
+                  </div>
+                }
+              </div>
+            </div>
+
+          </div>
+        </div>
+      }
+    </div>
+  
+
+
+
