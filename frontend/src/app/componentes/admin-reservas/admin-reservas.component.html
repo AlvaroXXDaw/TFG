@@ -1,0 +1,180 @@
+<div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-12">
+  <div class="mb-12">
+    <h2 class="text-4xl font-light tracking-tighter text-emerald-950 uppercase mb-2">Gestion de Reservas</h2>
+    <p class="text-gray-500 font-light">Vista de calendario por horas y detalle de reservas del dia.</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="lg:col-span-2 bg-white border border-black/5 p-6 md:p-8">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+        <div>
+          <h3 class="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-3">Calendario Diario</h3>
+          <input
+            type="date"
+            [ngModel]="selectedDate()"
+            (ngModelChange)="changeDate($event)"
+            class="border border-black/10 px-3 py-2 text-sm text-emerald-950 focus:border-emerald-950 focus:outline-none"
+          >
+        </div>
+
+        <div class="flex flex-col md:items-end gap-4">
+          <div class="flex flex-wrap gap-2">
+            <button
+              (click)="applyFilter('Todos')"
+              [class.bg-emerald-950]="filterSport() === 'Todos'"
+              [class.text-white]="filterSport() === 'Todos'"
+              [class.bg-white]="filterSport() !== 'Todos'"
+              [class.text-emerald-950]="filterSport() !== 'Todos'"
+              class="px-4 py-2 text-[10px] font-semibold tracking-[0.2em] uppercase border border-emerald-950 transition-colors"
+            >
+              Todos
+            </button>
+            <button
+              (click)="applyFilter('FUTBOL')"
+              [class.bg-emerald-950]="filterSport() === 'FUTBOL'"
+              [class.text-white]="filterSport() === 'FUTBOL'"
+              [class.bg-white]="filterSport() !== 'FUTBOL'"
+              [class.text-emerald-950]="filterSport() !== 'FUTBOL'"
+              class="px-4 py-2 text-[10px] font-semibold tracking-[0.2em] uppercase border border-emerald-950 transition-colors"
+            >
+              Futbol
+            </button>
+            <button
+              (click)="applyFilter('PADEL')"
+              [class.bg-emerald-950]="filterSport() === 'PADEL'"
+              [class.text-white]="filterSport() === 'PADEL'"
+              [class.bg-white]="filterSport() !== 'PADEL'"
+              [class.text-emerald-950]="filterSport() !== 'PADEL'"
+              class="px-4 py-2 text-[10px] font-semibold tracking-[0.2em] uppercase border border-emerald-950 transition-colors"
+            >
+              Padel
+            </button>
+          </div>
+
+          <div class="w-full md:w-56">
+            <span class="block text-[10px] font-semibold tracking-[0.15em] uppercase text-gray-400 mb-2">Pista</span>
+            <select
+              [ngModel]="filterCourtId()"
+              (ngModelChange)="applyCourtFilter($event)"
+              class="w-full border border-black/10 px-3 py-2 text-sm text-emerald-950 focus:border-emerald-950 focus:outline-none bg-white"
+            >
+              <option value="TODAS">Todas las pistas</option>
+              @for (court of filterCourts(); track court.id) {
+                <option [value]="court.id">{{ court.name }}</option>
+              }
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="border border-black/10">
+        @for (time of scheduleTimes(); track time) {
+          <div class="grid grid-cols-[90px_1fr] border-b border-black/10 last:border-b-0">
+            <div class="bg-gray-50 px-3 py-4 text-xs font-semibold tracking-[0.15em] text-gray-500">{{ time }}</div>
+            <div class="px-4 py-3">
+              @if (reservationsAt(time).length === 0) {
+                <p class="text-sm text-gray-400">Libre</p>
+              } @else {
+                <div class="flex flex-wrap gap-2">
+                  @for (res of reservationsAt(time); track res.id) {
+                    <span class="inline-flex items-center gap-2 px-2 py-1 text-[10px] font-semibold tracking-[0.12em] uppercase bg-emerald-100 text-emerald-800">
+                      {{ res.userName }}
+                      <span class="text-[9px] text-emerald-900">{{ res.court }}</span>
+                    </span>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="mt-10">
+        <h3 class="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-6">Reservas del dia</h3>
+
+        @if (dayReservations().length === 0) {
+          <p class="text-sm text-gray-500">No hay reservas para este dia.</p>
+        } @else {
+          <div class="space-y-3">
+            @for (res of dayReservations(); track res.id) {
+              <div class="border border-black/10 p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                <div>
+                  <p class="text-sm font-semibold text-emerald-950">{{ res.userName }} · {{ res.time }}</p>
+                  <p class="text-sm text-gray-500">{{ res.sport }} · {{ res.court }} · {{ statusLabel(res.status) }}</p>
+                  <p class="text-xs text-gray-400">ID cliente: {{ res.clientId ?? 'MANTENIMIENTO' }}</p>
+                </div>
+                <div>
+                  @if (res.status === 'MAINTENANCE') {
+                    <button
+                      (click)="removeMaintenance(res.id)"
+                      class="text-xs font-semibold tracking-[0.1em] uppercase text-emerald-700 hover:text-emerald-900"
+                    >
+                      Habilitar
+                    </button>
+                  } @else {
+                    <button
+                      (click)="cancelReservation(res.id)"
+                      class="text-xs font-semibold tracking-[0.1em] uppercase text-red-500 hover:text-red-700"
+                    >
+                      Cancelar
+                    </button>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="bg-white border border-black/5 p-6 md:p-8 h-fit">
+      <h3 class="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-8">Bloquear por Mantenimiento</h3>
+
+      <form (submit)="blockCourt($event)" class="space-y-6">
+        <div>
+          <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Deporte</span>
+          <select
+            [(ngModel)]="blockForm.sport"
+            (ngModelChange)="onBlockSportChange($event)"
+            name="sport"
+            class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm"
+          >
+            <option value="FUTBOL">Futbol</option>
+            <option value="PADEL">Padel</option>
+          </select>
+        </div>
+
+        <div>
+          <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Pista</span>
+          <select
+            [(ngModel)]="blockForm.courtId"
+            name="courtId"
+            class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm"
+          >
+            @for (court of courtsForBlock(); track court.id) {
+              <option [value]="court.id">{{ court.name }}</option>
+            }
+            @if (courtsForBlock().length === 0) {
+              <option value="" disabled>Sin pistas disponibles</option>
+            }
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Fecha</span>
+            <input type="date" [(ngModel)]="blockForm.date" name="date" class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm">
+          </div>
+          <div>
+            <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Hora</span>
+            <input type="time" [(ngModel)]="blockForm.time" name="time" class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm">
+          </div>
+        </div>
+
+        <button type="submit" class="w-full bg-red-900 text-white py-4 text-xs font-semibold tracking-[0.2em] uppercase hover:bg-red-950 transition-colors mt-4">
+          Bloquear Pista
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
