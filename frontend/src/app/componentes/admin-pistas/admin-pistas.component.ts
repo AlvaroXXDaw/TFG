@@ -31,7 +31,7 @@ export class AdminPistasComponent implements OnInit {
   loadCourts(): void {
     const sport = this.selectedSport() ?? undefined;
     this.courtService.getCourts(sport).subscribe({
-      next: (data) => this.courts.set(data.filter(c => c.isActive)),
+      next: (data) => this.courts.set(data),
       error: (err) => console.error('Error load courts:', err)
     });
   }

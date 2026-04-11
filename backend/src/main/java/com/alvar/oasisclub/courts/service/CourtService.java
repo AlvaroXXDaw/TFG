@@ -49,12 +49,7 @@ public class CourtService {
         CourtEntity court = courtRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Court not found"));
 
-        if (Boolean.FALSE.equals(court.getIsActive())) {
-            return;
-        }
-
-        court.setIsActive(false);
-        courtRepository.save(court);
+        courtRepository.delete(court);
     }
 }
 
