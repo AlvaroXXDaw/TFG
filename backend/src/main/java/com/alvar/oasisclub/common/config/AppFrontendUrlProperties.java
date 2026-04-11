@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Getter
 public class AppFrontendUrlProperties {
 
-  @Value("${app.frontend-url:https://emily-mu-three.vercel.app}")
+  @Value("${app.frontend-url:https://tfg-mocha.vercel.app}")
   private String frontendUrl;
 }
 

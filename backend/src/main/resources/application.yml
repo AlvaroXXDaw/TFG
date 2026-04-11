@@ -42,7 +42,7 @@ app:
     secret: ${JWT_SECRET}
     expiration-ms: 86400000
   cors:
-    allowed-origins: ${CORS_ORIGINS:https://emily-mu-three.vercel.app}
-  frontend-url: ${FRONTEND_URL:https://emily-mu-three.vercel.app}
+    allowed-origins: ${CORS_ORIGINS:https://tfg-mocha.vercel.app}
+  frontend-url: ${FRONTEND_URL:https://tfg-mocha.vercel.app}
   mail:
     override-to: ${MAIL_OVERRIDE_TO:}
