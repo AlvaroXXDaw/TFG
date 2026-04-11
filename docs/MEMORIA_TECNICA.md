@@ -2,7 +2,7 @@
 
 ## 1. Descripcion general
 
-Emily es una aplicacion web para gestionar un club deportivo, con foco en:
+Oasis Club es una aplicacion web para gestionar un club deportivo, con foco en:
 
 - reservas de pistas,
 - administracion de clientes,

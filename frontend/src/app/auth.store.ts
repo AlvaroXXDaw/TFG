@@ -3,7 +3,7 @@ import {isPlatformBrowser} from '@angular/common';
 
 import {AuthSession, ClientPlan, UserRole} from './modelos/auth.models';
 
-const STORAGE_KEY = 'emily.auth.session';
+const STORAGE_KEY = 'oasisclub.auth.session';
 const VALID_ROLES: UserRole[] = ['ADMIN', 'MEMBER', 'EMPLOYEE'];
 const VALID_PLANS: ClientPlan[] = ['BASIC', 'PREMIUM'];
 

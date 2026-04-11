@@ -73,14 +73,14 @@ class AuthServiceTest {
   void loginOk() {
     LoginRequest request = new LoginRequest();
     request.setEmail("test@example.com");
-    request.setPassword("emily1234");
+    request.setPassword("oasisclub1234");
 
     ClientEntity client = buildClient();
     AuthSessionResponse expected = new AuthSessionResponse();
     expected.setToken("jwt-token");
 
     when(clientService.findByEmail("test@example.com")).thenReturn(client);
-    when(passwordEncoder.matches("emily1234", "$2a$10$")).thenReturn(true);
+    when(passwordEncoder.matches("oasisclub1234", "$2a$10$")).thenReturn(true);
     when(jwtService.generateToken(client.getId(), client.getEmail(), client.getRole())).thenReturn("jwt-token");
     when(authMapper.toResponse(client, "jwt-token")).thenReturn(expected);
 

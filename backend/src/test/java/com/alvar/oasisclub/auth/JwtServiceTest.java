@@ -19,7 +19,7 @@ class JwtServiceTest {
   void setUp() throws Exception {
     jwtService = new JwtService();
 
-    setField(jwtService, "secret", "jwt-secret-test-emily-2026-min-32-chars!!");
+    setField(jwtService, "secret", "jwt-secret-test-oasisclub-2026-min-32-chars!!");
     setField(jwtService, "expirationMs", 86400000L);
   }
 

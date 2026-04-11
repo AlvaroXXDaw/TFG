@@ -1,18 +1,18 @@
 services:
   postgres:
     image: postgres:16
-    container_name: emily-postgres
+    container_name: oasisclub-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-emily}
-      POSTGRES_USER: ${POSTGRES_USER:-emily}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-emily}
+      POSTGRES_DB: ${POSTGRES_DB:-oasisclub}
+      POSTGRES_USER: ${POSTGRES_USER:-oasisclub}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-oasisclub}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-emily} -d ${POSTGRES_DB:-emily}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-oasisclub} -d ${POSTGRES_DB:-oasisclub}"]
       interval: 5s
       timeout: 5s
       retries: 12
@@ -21,15 +21,15 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: emily-backend
+    container_name: oasisclub-backend
     restart: unless-stopped
     depends_on:
       postgres:
         condition: service_healthy
     environment:
-      DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-emily}
-      DB_USERNAME: ${POSTGRES_USER:-emily}
-      DB_PASSWORD: ${POSTGRES_PASSWORD:-emily}
+      DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-oasisclub}
+      DB_USERNAME: ${POSTGRES_USER:-oasisclub}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-oasisclub}
       PORT: 8080
       JWT_SECRET: ${JWT_SECRET}
       CORS_ORIGINS: ${CORS_ORIGINS:-https://tfg-mocha.vercel.app}

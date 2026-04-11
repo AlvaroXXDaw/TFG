@@ -9,10 +9,15 @@ Aplicacion web para la gestion de un club deportivo.
 - Base de datos: PostgreSQL
 - Despliegue: Render (backend) + Vercel (frontend)
 
+## Entornos en Producción
+
+- **Frontend (Web App):** [https://tfg-mocha.vercel.app](https://tfg-mocha.vercel.app)
+- **Backend (API Base):** [https://oasisclub-backend.onrender.com](https://oasisclub-backend.onrender.com)
+- **Documentación Swagger:** [https://oasisclub-backend.onrender.com/swagger-ui/index.html](https://oasisclub-backend.onrender.com/swagger-ui/index.html)
 ## Estructura del repositorio
 
 ```text
-Emily/
+Oasis Club/
 |-- frontend/
 |-- backend/
 |-- docs/
