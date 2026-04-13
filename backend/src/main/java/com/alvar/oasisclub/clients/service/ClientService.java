@@ -109,7 +109,7 @@ public class ClientService {
     }
 
     client.setPlan(plan);
-    client.setSubscriptionName(plan == ClientPlan.PREMIUM ? "Premium Mensual" : "BÃ¡sico Mensual");
+    client.setSubscriptionName(plan == ClientPlan.PREMIUM ? "Premium Mensual" : "Básico Mensual");
     client.setSubscriptionAmountCents(plan == ClientPlan.PREMIUM ? 5999 : 3999);
 
     ClientEntity saved = clientRepository.save(client);

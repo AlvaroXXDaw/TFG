@@ -33,7 +33,7 @@ public class ClientMapper {
         .email(request.getEmail().trim().toLowerCase())
         .plan(request.getPlan())
         .joinDate(LocalDate.now())
-        .subscriptionName(request.getPlan().name().equals("PREMIUM") ? "Premium Mensual" : "BÃ¡sico Mensual")
+        .subscriptionName(request.getPlan().name().equals("PREMIUM") ? "Premium Mensual" : "Básico Mensual")
         .nextBillingDate(LocalDate.now().plusMonths(1))
         .subscriptionAmountCents(request.getPlan().name().equals("PREMIUM") ? 5999 : 3999)
         .passwordHash(passwordEncoder.encode(request.getPassword()))

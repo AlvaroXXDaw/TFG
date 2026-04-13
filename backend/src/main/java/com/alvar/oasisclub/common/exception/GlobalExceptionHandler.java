@@ -186,7 +186,7 @@ public class GlobalExceptionHandler {
         .timestamp(LocalDateTime.now())
         .status(HttpStatus.UNAUTHORIZED.value())
         .error(HttpStatus.UNAUTHORIZED.getReasonPhrase())
-        .message("Credenciales invÃ¡lidas")
+        .message("Credenciales inválidas")
         .path(request.getRequestURI())
         .details(List.of())
         .build();

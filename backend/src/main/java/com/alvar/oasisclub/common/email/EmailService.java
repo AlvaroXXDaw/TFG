@@ -68,7 +68,7 @@ public class EmailService {
         
         Recuperar clave
 
-        Hemos recibido una solicitud para restablecer la contraseÃ±a de tu cuenta.
+        Hemos recibido una solicitud para restablecer la contraseña de tu cuenta.
         Usa el siguiente enlace para crear una nueva clave de acceso:
         %s
 
@@ -97,15 +97,15 @@ public class EmailService {
             Recuperar tu clave
           </h2>
           <p style="margin: 0 0 32px; color: #52525b; font-size: 15px; line-height: 1.7; font-weight: 300;">
-            Hemos recibido una solicitud para restablecer la contraseÃ±a de acceso a tu cuenta. Haz clic en el siguiente enlace para definir una nueva clave de forma segura.
+            Hemos recibido una solicitud para restablecer la contraseña de acceso a tu cuenta. Haz clic en el siguiente enlace para definir una nueva clave de forma segura.
           </p>
           <div style="margin: 36px 0;">
             <a href="%s" style="display: inline-block; background-color: #022c22; color: #ffffff; text-decoration: none; padding: 18px 40px; font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">
-              Restablecer ContraseÃ±a
+              Restablecer Contraseña
             </a>
           </div>
           <p style="margin: 0 0 12px; color: #71717a; font-size: 13px; line-height: 1.6;">
-            <strong>Nota de seguridad:</strong> Este enlace caducarÃ¡ en 30 minutos.
+            <strong>Nota de seguridad:</strong> Este enlace caducará en 30 minutos.
           </p>
           <p style="margin: 0; color: #a1a1aa; font-size: 13px; line-height: 1.6;">
             Si no has solicitado este cambio, por favor ignora este correo. Tu cuenta sigue estando protegida.
@@ -129,7 +129,7 @@ public class EmailService {
           </p>
           <div style="margin: 36px 0;">
             <span style="display: inline-block; border: 1px solid #022c22; color: #022c22; padding: 16px 40px; font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">
-              MembresÃ­a Activa
+              Membresía Activa
             </span>
           </div>
           <p style="margin: 0; color: #a1a1aa; font-size: 13px; line-height: 1.6;">
@@ -176,7 +176,7 @@ public class EmailService {
                     <td style="padding: 0 48px 40px 48px;">
                       <div style="background-color: #f9fafb; border: 1px solid #f4f4f5; padding: 24px; text-align: center;">
                         <p style="margin: 0; color: #52525b; font-size: 13px; font-weight: 400; line-height: 1.6;">
-                          Â¿Tienes alguna duda o necesitas ayuda?<br>
+                          ¿Tienes alguna duda o necesitas ayuda?<br>
                           Contacta con nuestro equipo de soporte en<br>
                           <a href="mailto:soporte@oasisclub.com" style="color: #022c22; text-decoration: underline; font-weight: 600;">soporte@oasisclub.com</a>
                         </p>
@@ -187,11 +187,11 @@ public class EmailService {
                   <tr>
                     <td style="padding: 32px 48px; background-color: #022c22; text-align: center;">
                       <p style="margin: 0 0 12px; color: #d4d4d8; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600;">
-                        Â© %d OASIS CLUB. RESERVADOS TODOS LOS DERECHOS.
+                        © %d OASIS CLUB. RESERVADOS TODOS LOS DERECHOS.
                       </p>
                       <p style="margin: 0; color: #a1a1aa; font-size: 11px; line-height: 1.6;">
-                        Urb. Oasis de los AlcÃ¡zares Â· RegiÃ³n de Murcia, EspaÃ±a<br>
-                        Este es un mensaje automÃ¡tico, por favor no respondas directamente a este correo.
+                        Urb. Oasis de los Alcázares · Región de Murcia, España<br>
+                        Este es un mensaje automático, por favor no respondas directamente a este correo.
                       </p>
                     </td>
                   </tr>

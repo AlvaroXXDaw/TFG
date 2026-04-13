@@ -42,11 +42,11 @@ public class AuthService {
 
     ClientEntity client = clientService.findByEmail(email);
     if (client == null) {
-      throw new InvalidCredentialsException("Credenciales invÃ¡lidas");
+      throw new InvalidCredentialsException("Credenciales inválidas");
     }
 
     if (!passwordEncoder.matches(request.getPassword(), client.getPasswordHash())) {
-      throw new InvalidCredentialsException("Credenciales invÃ¡lidas");
+      throw new InvalidCredentialsException("Credenciales inválidas");
     }
 
     String token = jwtService.generateToken(client.getId(), client.getEmail(), client.getRole());
@@ -64,7 +64,7 @@ public class AuthService {
     }
 
     if (clientService.findByPhone(phone) != null) {
-      throw new EmailAlreadyRegisteredException("Ya existe una cuenta con ese telÃ©fono");
+      throw new EmailAlreadyRegisteredException("Ya existe una cuenta con ese teléfono");
     }
 
     ClientEntity client = ClientEntity.builder()
@@ -72,7 +72,7 @@ public class AuthService {
         .email(email)
         .plan(ClientPlan.BASIC)
         .joinDate(LocalDate.now())
-        .subscriptionName("BÃ¡sico Mensual")
+        .subscriptionName("Básico Mensual")
         .nextBillingDate(LocalDate.now().plusMonths(1))
         .subscriptionAmountCents(3999)
         .passwordHash(passwordEncoder.encode(request.getPassword()))
@@ -118,7 +118,7 @@ public class AuthService {
   @Transactional
   public void resetPassword(String token, String newPassword) {
     PasswordResetTokenEntity resetToken = resetTokenRepository.findByToken(token)
-        .orElseThrow(() -> new PasswordResetTokenInvalidException("Token invÃ¡lido o expirado"));
+        .orElseThrow(() -> new PasswordResetTokenInvalidException("Token inválido o expirado"));
 
     if (resetToken.isUsed()) {
       throw new PasswordResetTokenInvalidException("Este enlace ya fue utilizado");
