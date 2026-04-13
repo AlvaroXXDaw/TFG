@@ -10,7 +10,6 @@ public class ProfileResponse {
   private String name;
   private String subscriptionName;
   private LocalDate nextBillingDate;
-  private Integer subscriptionAmountCents;
   private List<ProfileReservationResponse> reservations;
 }
 

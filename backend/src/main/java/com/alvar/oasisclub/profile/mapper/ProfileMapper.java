@@ -16,7 +16,6 @@ public class ProfileMapper {
     response.setName(client.getName());
     response.setSubscriptionName(client.getSubscriptionName());
     response.setNextBillingDate(client.getNextBillingDate());
-    response.setSubscriptionAmountCents(client.getSubscriptionAmountCents());
     response.setReservations(reservations.stream().map(this::toReservationResponse).toList());
     return response;
   }

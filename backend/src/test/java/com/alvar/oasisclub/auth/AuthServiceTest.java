@@ -61,9 +61,8 @@ class AuthServiceTest {
         .email("test@example.com")
         .plan(ClientPlan.BASIC)
         .joinDate(LocalDate.now())
-        .subscriptionName("Basic Monthly")
+        .subscriptionName("Plan Basico")
         .nextBillingDate(LocalDate.now().plusMonths(1))
-        .subscriptionAmountCents(3999)
         .passwordHash("$2a$10$hashfalso")
         .role("MEMBER")
         .build();

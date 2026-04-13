@@ -48,9 +48,6 @@ public class ClientEntity {
   @Column(name = "next_billing_date", nullable = false)
   private LocalDate nextBillingDate;
 
-  @Column(name = "subscription_amount_cents", nullable = false)
-  private Integer subscriptionAmountCents;
-
   @Column(name = "password_hash", nullable = false)
   private String passwordHash;
 

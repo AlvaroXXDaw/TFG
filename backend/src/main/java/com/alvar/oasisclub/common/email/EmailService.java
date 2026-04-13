@@ -129,7 +129,7 @@ public class EmailService {
           </p>
           <div style="margin: 36px 0;">
             <span style="display: inline-block; border: 1px solid #022c22; color: #022c22; padding: 16px 40px; font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">
-              Membresía Activa
+              Plan Activo
             </span>
           </div>
           <p style="margin: 0; color: #a1a1aa; font-size: 13px; line-height: 1.6;">

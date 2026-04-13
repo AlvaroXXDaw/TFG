@@ -12,6 +12,5 @@ export interface ProfileSummary {
   name: string;
   subscriptionName: string;
   nextBillingDate: string;
-  subscriptionAmountCents: number;
   reservations: ProfileReservation[];
 }

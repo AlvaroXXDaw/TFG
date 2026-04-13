@@ -7,7 +7,6 @@ CREATE TABLE clients (
   join_date DATE NOT NULL,
   subscription_name VARCHAR(80) NOT NULL,
   next_billing_date DATE NOT NULL,
-  subscription_amount_cents INTEGER NOT NULL,
   password_hash VARCHAR(255) NOT NULL,
   role VARCHAR(20) NOT NULL,
   phone VARCHAR(20) UNIQUE,
@@ -80,10 +79,10 @@ INSERT INTO courts (id, name, sport, is_active, created_at) VALUES
 ('55555555-5555-5555-5555-555555555553', 'Pista 1 (F11)', 'FUTBOL', true, CURRENT_TIMESTAMP),
 ('55555555-5555-5555-5555-555555555554', 'Pista 2 (F7)', 'FUTBOL', true, CURRENT_TIMESTAMP);
 
-INSERT INTO clients (id, name, email, plan, join_date, subscription_name, next_billing_date, subscription_amount_cents, password_hash, role, phone, birth_date) VALUES
-('11111111-1111-1111-1111-111111111111', 'Álvaro Martínez', 'alvaro@example.com', 'PREMIUM', DATE '2026-01-15', 'Premium Mensual', DATE '2026-04-15', 5999, '$2b$10$Ds7j.nkEMsNIt9S5Ma9T3OQj.Moz3pHx7Hij8geHITB.7wqZSpKt2', 'MEMBER', '600000001', DATE '1995-06-15'),
-('22222222-2222-2222-2222-222222222222', 'Laura Sánchez', 'laura@example.com', 'BASIC', DATE '2026-02-20', 'Básico Mensual', DATE '2026-04-10', 3999, '$2b$10$Ds7j.nkEMsNIt9S5Ma9T3OQj.Moz3pHx7Hij8geHITB.7wqZSpKt2', 'MEMBER', '600000002', DATE '1998-03-22'),
-('33333333-3333-3333-3333-333333333333', 'Admin Club', 'admin@oasisclub.local', 'PREMIUM', DATE '2025-12-01', 'Premium Mensual', DATE '2026-04-01', 0, '$2b$10$Ds7j.nkEMsNIt9S5Ma9T3OQj.Moz3pHx7Hij8geHITB.7wqZSpKt2', 'ADMIN', '600000003', DATE '1990-01-01');
+INSERT INTO clients (id, name, email, plan, join_date, subscription_name, next_billing_date, password_hash, role, phone, birth_date) VALUES
+('11111111-1111-1111-1111-111111111111', 'Álvaro Martínez', 'alvaro@example.com', 'PREMIUM', DATE '2026-01-15', 'Plan Premium', DATE '2026-04-15', '$2b$10$Ds7j.nkEMsNIt9S5Ma9T3OQj.Moz3pHx7Hij8geHITB.7wqZSpKt2', 'MEMBER', '600000001', DATE '1995-06-15'),
+('22222222-2222-2222-2222-222222222222', 'Laura Sánchez', 'laura@example.com', 'BASIC', DATE '2026-02-20', 'Plan Basico', DATE '2026-04-10', '$2b$10$Ds7j.nkEMsNIt9S5Ma9T3OQj.Moz3pHx7Hij8geHITB.7wqZSpKt2', 'MEMBER', '600000002', DATE '1998-03-22'),
+('33333333-3333-3333-3333-333333333333', 'Admin Club', 'admin@oasisclub.local', 'PREMIUM', DATE '2025-12-01', 'Plan Premium', DATE '2026-04-01', '$2b$10$Ds7j.nkEMsNIt9S5Ma9T3OQj.Moz3pHx7Hij8geHITB.7wqZSpKt2', 'ADMIN', '600000003', DATE '1990-01-01');
 
 INSERT INTO reservations (id, client_id, user_name, sport, court_id, reservation_date, reservation_time, status, created_at) VALUES
 ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '11111111-1111-1111-1111-111111111111', 'Álvaro Martínez', 'PADEL', '55555555-5555-5555-5555-555555555551', DATE '2026-03-10', TIME '18:00:00', 'PENDING', CURRENT_TIMESTAMP),

@@ -46,9 +46,8 @@ class ProfileServiceTest {
         .email("alvaro@test.com")
         .plan(ClientPlan.PREMIUM)
         .joinDate(LocalDate.now())
-        .subscriptionName("Premium Monthly")
+        .subscriptionName("Plan Premium")
         .nextBillingDate(LocalDate.now().plusMonths(1))
-        .subscriptionAmountCents(5999)
         .passwordHash("$2a$10$hashfalso")
         .role("MEMBER")
         .build();
@@ -58,7 +57,7 @@ class ProfileServiceTest {
     ProfileResponse expectedResponse = new ProfileResponse();
     expectedResponse.setClientId(clientId.toString());
     expectedResponse.setName("Alvaro");
-    expectedResponse.setSubscriptionName("Premium Monthly");
+    expectedResponse.setSubscriptionName("Plan Premium");
     expectedResponse.setReservations(List.of());
 
     when(clientService.getEntityById(clientId)).thenReturn(client);
@@ -69,7 +68,7 @@ class ProfileServiceTest {
 
     assertNotNull(result);
     assertEquals("Alvaro", result.getName());
-    assertEquals("Premium Monthly", result.getSubscriptionName());
+    assertEquals("Plan Premium", result.getSubscriptionName());
     assertEquals(0, result.getReservations().size());
   }
 }

@@ -50,9 +50,8 @@ class ClientServiceTest {
         .email("carlos@test.com")
         .plan(ClientPlan.BASIC)
         .joinDate(LocalDate.now())
-        .subscriptionName("Basic Monthly")
+        .subscriptionName("Plan Basico")
         .nextBillingDate(LocalDate.now().plusMonths(1))
-        .subscriptionAmountCents(3999)
         .passwordHash("hash")
         .role("MEMBER")
         .build();
