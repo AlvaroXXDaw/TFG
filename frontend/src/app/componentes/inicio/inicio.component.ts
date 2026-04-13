@@ -53,13 +53,11 @@ export class InicioComponent implements AfterViewInit {
     const track = this.scrollTrack.nativeElement;
     const wrapperRect = wrapper.getBoundingClientRect();
 
-    // How far we've scrolled past the top of the wrapper
     const scrolled = -wrapperRect.top;
     const wrapperHeight = wrapper.offsetHeight;
     const viewportWidth = window.innerWidth;
     const trackWidth = track.scrollWidth;
 
-    // Total horizontal distance to travel
     const maxScroll = trackWidth - viewportWidth;
 
     if (scrolled <= 0) {

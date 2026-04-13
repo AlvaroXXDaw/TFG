@@ -22,7 +22,6 @@ export class ReservasComponent implements OnInit {
   private reservationsService = inject(ReservationsApiService);
   private courtService = inject(CourtApiService);
 
-  // Steps: 1: Sport -> 2: Court -> 3: Time -> 4: Confirm -> 5: Success
   currentStep = signal<number>(1);
   selectedSport = signal<'PADEL' | 'FUTBOL' | null>(null);
   selectedCourt = signal<CourtResponse | null>(null);

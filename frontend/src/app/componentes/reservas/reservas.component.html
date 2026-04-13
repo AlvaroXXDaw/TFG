@@ -14,7 +14,7 @@
     </div>
   } @else {
     
-    <!-- STEP 1: Deporte -->
+    
     @if (currentStep() === 1) {
       <div class="flex flex-col lg:flex-row h-[calc(100vh-6rem)]">
         <button (click)="selectSport('FUTBOL')" class="relative flex-1 group cursor-pointer overflow-hidden border-none p-0 text-left focus:outline-none focus:ring-4 focus:ring-emerald-950/50">
@@ -37,7 +37,7 @@
       </div>
     }
 
-    <!-- STEP 2: Elegir Pista -->
+    
     @if (currentStep() === 2) {
       <div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-12 lg:py-24 animate-fade-in">
         <button (click)="goBack()" class="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 hover:text-emerald-950 transition-colors mb-6 flex items-center">
@@ -62,7 +62,7 @@
       </div>
     }
 
-    <!-- STEP 3: Elegir Horario -->
+    
     @if (currentStep() === 3) {
       <div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-12 lg:py-24 animate-fade-in">
         <button (click)="goBack()" class="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 hover:text-emerald-950 transition-colors mb-6 flex items-center">
@@ -117,7 +117,7 @@
       </div>
     }
 
-    <!-- STEP 4: Checkout y Confirmación -->
+    
     @if (currentStep() === 4) {
       <div class="max-w-xl mx-auto px-6 py-12 lg:py-24 animate-fade-in text-center">
         <h2 class="text-3xl font-light tracking-tighter text-emerald-950 uppercase mb-8">Confirmar Reserva</h2>
@@ -151,7 +151,7 @@
       </div>
     }
 
-    <!-- STEP 5: Success -->
+    
     @if (currentStep() === 5) {
       <div class="h-[calc(100vh-6rem)] flex flex-col items-center justify-center text-center px-6 bg-[#f8f9fa] animate-fade-in">
         <div class="w-20 h-20 rounded-full bg-emerald-950 flex items-center justify-center mb-8 shadow-sm">
@@ -170,3 +170,4 @@
 
   }
 </div>
+
