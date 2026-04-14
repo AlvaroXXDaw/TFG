@@ -41,3 +41,9 @@ Thumbs.db
 backend/target/
 *.class
 *.jar
+
+# archivos de docker
+docker-compose.dev.yml
+**/Dockerfile.dev
+**/.dockerignore
+frontend/proxy.conf.dev.json
