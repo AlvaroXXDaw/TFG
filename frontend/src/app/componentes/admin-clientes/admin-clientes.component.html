@@ -5,24 +5,28 @@
   </div>
 
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-    
+
     <div class="bg-white border border-black/5 p-6 md:p-8 h-fit">
       <h3 class="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-8">Añadir Nuevo Socio</h3>
-      
+
       <form (submit)="addClient($event)" class="space-y-6">
         <div>
           <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Nombre Completo</span>
-          <input type="text" [(ngModel)]="newClient.name" name="name" required class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm">
+          <input type="text" [(ngModel)]="newClient.name" name="name" required
+            class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm">
         </div>
-        
+
         <div>
-          <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Correo Electrónico</span>
-          <input type="email" [(ngModel)]="newClient.email" name="email" required class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm">
+          <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Correo
+            Electrónico</span>
+          <input type="email" [(ngModel)]="newClient.email" name="email" required
+            class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm">
         </div>
-        
+
         <div>
           <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Plan</span>
-          <select [(ngModel)]="newClient.plan" name="plan" class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm">
+          <select [(ngModel)]="newClient.plan" name="plan"
+            class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm">
             <option value="BASIC">Básico</option>
             <option value="PREMIUM">Premium</option>
           </select>
@@ -30,20 +34,26 @@
 
         <div>
           <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Teléfono</span>
-          <input type="tel" [(ngModel)]="newClient.phone" name="phone" required class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm">
+          <input type="tel" [(ngModel)]="newClient.phone" name="phone" required
+            class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm">
         </div>
 
         <div>
-          <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Fecha de nacimiento</span>
-          <input type="date" [(ngModel)]="newClient.birthDate" name="birthDate" required class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm">
+          <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Fecha de
+            nacimiento</span>
+          <input type="date" [(ngModel)]="newClient.birthDate" name="birthDate" required
+            class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm">
         </div>
 
         <div>
-          <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Contraseña inicial</span>
-          <input type="password" [(ngModel)]="newClient.password" name="password" required class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm">
+          <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Contraseña
+            inicial</span>
+          <input type="password" [(ngModel)]="newClient.password" name="password" required
+            class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm">
         </div>
 
-        <button type="submit" class="w-full bg-emerald-950 text-white py-4 text-xs font-semibold tracking-[0.2em] uppercase hover:bg-emerald-900 transition-colors mt-4">
+        <button type="submit"
+          class="w-full bg-emerald-950 text-white py-4 text-xs font-semibold tracking-[0.2em] uppercase hover:bg-emerald-900 transition-colors mt-4">
           Registrar Socio
         </button>
       </form>
@@ -56,50 +66,54 @@
       </div>
 
       <form (submit)="applySearch($event)" class="mb-6 flex flex-col sm:flex-row gap-3">
-        <input
-          type="text"
-          [ngModel]="search()"
-          (ngModelChange)="search.set($event)"
-          name="search"
+        <input type="text" [ngModel]="search()" (ngModelChange)="search.set($event)" name="search"
           placeholder="Buscar por nombre o email"
-          class="flex-1 border border-black/10 px-4 py-3 text-sm text-emerald-950 focus:border-emerald-950 focus:outline-none"
-        >
-        <button type="submit" class="px-6 py-3 bg-emerald-950 text-white text-xs font-semibold tracking-[0.2em] uppercase hover:bg-emerald-900 transition-colors">
+          class="flex-1 border border-black/10 px-4 py-3 text-sm text-emerald-950 focus:border-emerald-950 focus:outline-none">
+        <button type="submit"
+          class="px-6 py-3 bg-emerald-950 text-white text-xs font-semibold tracking-[0.2em] uppercase hover:bg-emerald-900 transition-colors">
           Buscar
         </button>
       </form>
-      
-      
+
+
       <div class="hidden xl:block overflow-x-auto">
         <table class="w-full text-left border-collapse">
           <thead>
             <tr class="border-b border-black/10">
-              <th class="pb-4 pr-4 text-xs font-semibold tracking-[0.1em] uppercase text-gray-400">Socio</th>
-              <th class="pb-4 pr-4 text-xs font-semibold tracking-[0.1em] uppercase text-gray-400">Detalles</th>
-              <th class="pb-4 pr-4 text-xs font-semibold tracking-[0.1em] uppercase text-gray-400">Plan</th>
-              <th class="pb-4 pr-4 text-xs font-semibold tracking-[0.1em] uppercase text-gray-400">Alta</th>
-              <th class="pb-4"></th>
+              <th class="pb-6 pr-4 text-[10px] font-bold tracking-[0.3em] uppercase text-emerald-950/30">Socio</th>
+              <th class="pb-6 pr-4 text-[10px] font-bold tracking-[0.3em] uppercase text-emerald-950/30">Detalles de contacto</th>
+              <th class="pb-6 pr-4 text-[10px] font-bold tracking-[0.3em] uppercase text-emerald-950/30">Plan</th>
+              <th class="pb-6 pr-4 text-[10px] font-bold tracking-[0.3em] uppercase text-emerald-950/30 text-center">Alta</th>
+              <th class="pb-6"></th>
             </tr>
           </thead>
-          <tbody class="text-sm font-light text-gray-600">
+          <tbody class="divide-y divide-black/[0.03]">
             @for (client of clients(); track client.id) {
-              <tr class="border-b border-black/5 hover:bg-gray-50 transition-colors">
-                <td class="py-4 pr-4">
-                  <div class="font-medium text-emerald-950">{{ client.name }}</div>
-                  <div class="text-xs text-gray-500 truncate max-w-[150px] 2xl:max-w-[250px]" title="{{ client.email }}">{{ client.email }}</div>
+              <tr class="group hover:bg-emerald-50/20 transition-all duration-300">
+                <td class="py-6 pr-4">
+                  <div class="text-xl font-light tracking-tight text-emerald-950 uppercase italic leading-tight group-hover:translate-x-1 transition-transform inline-block">{{ client.name }}</div>
+                  <div class="text-[11px] text-gray-400 font-light lowercase tracking-tight mt-0.5" title="{{ client.email }}">{{ client.email }}</div>
                 </td>
-                <td class="py-4 pr-4">
-                  <div class="text-sm whitespace-nowrap">{{ client.phone || '—' }}</div>
-                  <div class="text-[11px] text-gray-400 uppercase tracking-wider mt-0.5 whitespace-nowrap">Nac: {{ client.birthDate || '—' }}</div>
-                </td>
-                <td class="py-4 pr-4 min-w-[170px]">
-                  @if (client.role === 'MEMBER') {
+                <td class="py-6 pr-4">
+                  <div class="space-y-1">
                     <div class="flex items-center gap-2">
+                      <span class="text-[8px] font-bold tracking-widest text-emerald-950/20 uppercase">Tlf</span>
+                      <span class="text-xs text-emerald-950/70">{{ client.phone || '—' }}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                       <span class="text-[8px] font-bold tracking-widest text-emerald-950/20 uppercase">Nac</span>
+                       <span class="text-[10px] text-gray-400 uppercase tracking-tighter">{{ client.birthDate || '—' }}</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-6 pr-4 min-w-[200px]">
+                  @if (client.role === 'MEMBER') {
+                    <div class="flex items-center gap-3">
                       <select
                         [ngModel]="getDraftPlan(client)"
                         (ngModelChange)="onPlanDraftChange(client.id, $event)"
                         [name]="'plan-desk-' + client.id"
-                        class="border border-black/10 bg-white px-2 py-1 text-[11px] font-semibold tracking-wider uppercase text-emerald-950 focus:border-emerald-950 focus:outline-none"
+                        class="border-b border-black/10 bg-transparent px-1 py-1 text-[11px] font-bold tracking-[0.2em] uppercase text-emerald-950 focus:border-emerald-950 focus:outline-none transition-colors"
                       >
                         @for (plan of plans; track plan) {
                           <option [value]="plan">{{ plan }}</option>
@@ -108,29 +122,32 @@
                       <button
                         (click)="applyClientPlan(client)"
                         [disabled]="!hasPlanChange(client) || savingPlanId() === client.id"
-                        class="px-2 py-1 text-[10px] font-semibold tracking-[0.12em] uppercase border border-emerald-950 text-emerald-950 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-emerald-950 hover:text-white transition-colors"
+                        class="px-4 py-2 text-[9px] font-bold tracking-[0.2em] uppercase border border-emerald-950/20 text-emerald-950 hover:bg-emerald-950 hover:text-white disabled:opacity-20 transition-all duration-400"
                       >
-                        @if (savingPlanId() === client.id) {
-                          G...
-                        } @else {
-                          Aplicar
-                        }
+                        {{ savingPlanId() === client.id ? '...' : 'Aplicar' }}
                       </button>
                     </div>
                   } @else {
-                    <span class="px-2 py-1 text-[10px] font-semibold tracking-wider uppercase rounded-sm bg-emerald-100 text-emerald-800">
-                      {{ client.plan }}
-                    </span>
-                    <span class="ml-2 px-2 py-1 text-[10px] font-semibold tracking-wider uppercase rounded-sm bg-amber-100 text-amber-800">
-                      {{ client.role }}
-                    </span>
+                    <div class="flex gap-2 items-center">
+                      <span class="px-3 py-1 text-[9px] font-bold tracking-[0.2em] uppercase bg-emerald-950 text-white italic">
+                        {{ client.plan }}
+                      </span>
+                      <span class="px-2 py-0.5 text-[8px] font-bold tracking-[0.3em] uppercase border border-emerald-950/20 text-emerald-950/30">
+                        {{ client.role }}
+                      </span>
+                    </div>
                   }
                 </td>
-                <td class="py-4 pr-4 whitespace-nowrap">{{ client.joinDate }}</td>
-                <td class="py-4 pl-4 text-right">
-                  <button (click)="removeClient(client.id)" class="text-xs font-semibold tracking-[0.1em] uppercase text-red-500 hover:text-red-700 transition-colors">
-                    Baja
-                  </button>
+                <td class="py-6 pr-4 text-center">
+                  <span class="text-[11px] font-medium text-emerald-900/40 uppercase tracking-tighter">{{ client.joinDate }}</span>
+                </td>
+                <td class="py-6 pl-4 text-right">
+                  @if (client.role !== 'ADMIN') {
+                    <button (click)="removeClient(client.id)" 
+                      class="group/del bg-gray-50 hover:bg-red-50 border border-black/5 hover:border-red-100 px-5 py-3 transition-all duration-300 text-[9px] font-bold tracking-[0.3em] uppercase text-gray-400 hover:text-red-600">
+                      Baja
+                    </button>
+                  }
                 </td>
               </tr>
             }
@@ -138,84 +155,87 @@
         </table>
       </div>
 
-      
+
       <div class="xl:hidden flex flex-col gap-4">
         @for (client of clients(); track client.id) {
-          <div class="border border-black/5 bg-white p-5 rounded-sm">
-            <div class="flex justify-between items-start mb-4 pb-4 border-b border-black/5">
-              <div>
-                <h4 class="font-medium text-emerald-950 text-base mb-1">{{ client.name }}</h4>
-                <p class="text-xs text-gray-500">{{ client.email }}</p>
-              </div>
-              <button (click)="removeClient(client.id)" class="text-[10px] font-semibold tracking-[0.1em] uppercase text-red-500 bg-red-50 px-2 py-1 rounded-sm border border-red-100 hover:bg-red-100 transition-colors shrink-0 ml-4">
+        <div class="border border-black/5 bg-white p-5 rounded-sm">
+          <div class="flex justify-between items-start mb-4 pb-4 border-b border-black/5">
+            <div>
+              <h4 class="font-medium text-emerald-950 text-base mb-1">{{ client.name }}</h4>
+              <p class="text-xs text-gray-500">{{ client.email }}</p>
+            </div>
+            @if (client.role !== 'ADMIN') {
+              <button (click)="removeClient(client.id)"
+                class="bg-gray-50 hover:bg-red-50 border border-black/5 hover:border-red-100 px-4 py-3 transition-all duration-300 text-[8px] font-bold tracking-[0.3em] uppercase text-gray-400 hover:text-red-600 shrink-0 ml-4">
                 Dar Baja
               </button>
-            </div>
-            
-            <div class="grid grid-cols-2 gap-4 mb-4 text-sm font-light text-gray-600">
-              <div>
-                <span class="block text-[10px] font-semibold tracking-[0.1em] uppercase text-gray-400 mb-1">Teléfono</span>
-                {{ client.phone || '—' }}
-              </div>
-              <div>
-                <span class="block text-[10px] font-semibold tracking-[0.1em] uppercase text-gray-400 mb-1">Nacimiento</span>
-                {{ client.birthDate || '—' }}
-              </div>
-              <div class="col-span-2">
-                <span class="block text-[10px] font-semibold tracking-[0.1em] uppercase text-gray-400 mb-1">Fecha Alta</span>
-                {{ client.joinDate }}
-              </div>
-            </div>
+            }
+          </div>
 
-            <div class="pt-4 border-t border-black/5">
-              <span class="block text-[10px] font-semibold tracking-[0.1em] uppercase text-gray-400 mb-2">Plan</span>
-              @if (client.role === 'MEMBER') {
-                <div class="flex items-center gap-2">
-                  <select
-                    [ngModel]="getDraftPlan(client)"
-                    (ngModelChange)="onPlanDraftChange(client.id, $event)"
-                    [name]="'plan-mob-' + client.id"
-                    class="flex-1 border border-black/10 bg-white px-3 py-2 text-xs font-semibold tracking-wider uppercase text-emerald-950 focus:border-emerald-950 focus:outline-none"
-                  >
-                    @for (plan of plans; track plan) {
-                      <option [value]="plan">{{ plan }}</option>
-                    }
-                  </select>
-                  <button
-                    (click)="applyClientPlan(client)"
-                    [disabled]="!hasPlanChange(client) || savingPlanId() === client.id"
-                    class="px-4 py-2 text-xs font-semibold tracking-[0.12em] uppercase border border-emerald-950 text-emerald-950 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-emerald-950 hover:text-white transition-colors"
-                  >
-                    @if (savingPlanId() === client.id) {
-                      Guardando
-                    } @else {
-                      Aplicar
-                    }
-                  </button>
-                </div>
-              } @else {
-                <div class="flex gap-2 mt-2">
-                  <span class="px-3 py-1.5 text-[10px] font-semibold tracking-wider uppercase rounded-sm bg-emerald-100 text-emerald-800">
-                    {{ client.plan }}
-                  </span>
-                  <span class="px-3 py-1.5 text-[10px] font-semibold tracking-wider uppercase rounded-sm bg-amber-100 text-amber-800">
-                    {{ client.role }}
-                  </span>
-                </div>
-              }
+          <div class="grid grid-cols-2 gap-4 mb-4 text-sm font-light text-gray-600">
+            <div>
+              <span
+                class="block text-[10px] font-semibold tracking-[0.1em] uppercase text-gray-400 mb-1">Teléfono</span>
+              {{ client.phone || '—' }}
+            </div>
+            <div>
+              <span
+                class="block text-[10px] font-semibold tracking-[0.1em] uppercase text-gray-400 mb-1">Nacimiento</span>
+              {{ client.birthDate || '—' }}
+            </div>
+            <div class="col-span-2">
+              <span class="block text-[10px] font-semibold tracking-[0.1em] uppercase text-gray-400 mb-1">Fecha
+                Alta</span>
+              {{ client.joinDate }}
             </div>
           </div>
+
+          <div class="pt-4 border-t border-black/5">
+            <span class="block text-[10px] font-semibold tracking-[0.1em] uppercase text-gray-400 mb-2">Plan</span>
+            @if (client.role === 'MEMBER') {
+            <div class="flex items-center gap-2">
+              <select [ngModel]="getDraftPlan(client)" (ngModelChange)="onPlanDraftChange(client.id, $event)"
+                [name]="'plan-mob-' + client.id"
+                class="flex-1 border border-black/10 bg-white px-3 py-2 text-xs font-semibold tracking-wider uppercase text-emerald-950 focus:border-emerald-950 focus:outline-none">
+                @for (plan of plans; track plan) {
+                <option [value]="plan">{{ plan }}</option>
+                }
+              </select>
+              <button (click)="applyClientPlan(client)"
+                [disabled]="!hasPlanChange(client) || savingPlanId() === client.id"
+                class="px-4 py-2 text-xs font-semibold tracking-[0.12em] uppercase border border-emerald-950 text-emerald-950 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-emerald-950 hover:text-white transition-colors">
+                @if (savingPlanId() === client.id) {
+                Guardando
+                } @else {
+                Aplicar
+                }
+              </button>
+            </div>
+            } @else {
+            <div class="flex gap-2 mt-2">
+              <span
+                class="px-3 py-1.5 text-[10px] font-semibold tracking-wider uppercase rounded-sm bg-emerald-100 text-emerald-800">
+                {{ client.plan }}
+              </span>
+              <span
+                class="px-3 py-1.5 text-[10px] font-semibold tracking-wider uppercase rounded-sm bg-amber-100 text-amber-800">
+                {{ client.role }}
+              </span>
+            </div>
+            }
+          </div>
+        </div>
         }
       </div>
 
-      
+
       @if (clients().length === 0) {
-        <div class="py-12 text-center text-gray-400 font-light text-sm bg-gray-50/50 border border-black/5 rounded-sm mt-4">
-          No hay socios registrados.
-        </div>
+      <div
+        class="py-12 text-center text-gray-400 font-light text-sm bg-gray-50/50 border border-black/5 rounded-sm mt-4">
+        No hay socios registrados.
+      </div>
       }
     </div>
 
   </div>
 </div>
-

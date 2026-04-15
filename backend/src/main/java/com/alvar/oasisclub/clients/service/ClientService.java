@@ -55,7 +55,7 @@ public class ClientService {
 
   @Transactional
   public ClientResponse createClient(CreateClientRequest request) {
-    clientRepository.findByEmailIgnoreCase(request.getEmail())
+    clientRepository.findByEmailIgnoreCase(request.getEmail().trim())
         .ifPresent(c -> {
           throw new ClientEmailAlreadyExistsException("Email already exists");
         });
@@ -73,10 +73,13 @@ public class ClientService {
 
   @Transactional
   public void deleteClient(UUID id) {
-    if (!clientRepository.existsById(id)) {
-      throw new ClientNotFoundException("Client not found");
+    ClientEntity client = getEntityById(id);
+
+    if ("ADMIN".equalsIgnoreCase(client.getRole())) {
+      throw new IllegalArgumentException("No se puede eliminar un usuario administrador.");
     }
-    clientRepository.deleteById(id);
+
+    clientRepository.delete(client);
   }
 
   @Transactional(readOnly = true)
@@ -115,5 +118,3 @@ public class ClientService {
     return clientMapper.toResponse(saved);
   }
 }
-
-
