@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 import com.alvar.oasisclub.clients.entity.ClientEntity;
-import com.alvar.oasisclub.clients.entity.ClientPlan;
 import com.alvar.oasisclub.clients.service.ClientService;
 import com.alvar.oasisclub.profile.dto.ProfileResponse;
 import com.alvar.oasisclub.profile.mapper.ProfileMapper;
@@ -44,10 +43,7 @@ class ProfileServiceTest {
         .id(clientId)
         .name("Alvaro")
         .email("alvaro@test.com")
-        .plan(ClientPlan.PREMIUM)
         .joinDate(LocalDate.now())
-        .subscriptionName("Plan Premium")
-        .nextBillingDate(LocalDate.now().plusMonths(1))
         .passwordHash("$2a$10$hashfalso")
         .role("MEMBER")
         .build();
@@ -57,7 +53,6 @@ class ProfileServiceTest {
     ProfileResponse expectedResponse = new ProfileResponse();
     expectedResponse.setClientId(clientId.toString());
     expectedResponse.setName("Alvaro");
-    expectedResponse.setSubscriptionName("Plan Premium");
     expectedResponse.setReservations(List.of());
 
     when(clientService.getEntityById(clientId)).thenReturn(client);
@@ -68,8 +63,6 @@ class ProfileServiceTest {
 
     assertNotNull(result);
     assertEquals("Alvaro", result.getName());
-    assertEquals("Plan Premium", result.getSubscriptionName());
     assertEquals(0, result.getReservations().size());
   }
 }
-

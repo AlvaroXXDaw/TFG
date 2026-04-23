@@ -11,7 +11,6 @@ import com.alvar.oasisclub.auth.mapper.AuthMapper;
 import com.alvar.oasisclub.auth.repository.PasswordResetTokenRepository;
 import com.alvar.oasisclub.auth.security.JwtService;
 import com.alvar.oasisclub.clients.entity.ClientEntity;
-import com.alvar.oasisclub.clients.entity.ClientPlan;
 import com.alvar.oasisclub.clients.service.ClientService;
 import com.alvar.oasisclub.common.config.AppFrontendUrlProperties;
 import com.alvar.oasisclub.common.email.EmailService;
@@ -70,10 +69,7 @@ public class AuthService {
     ClientEntity client = ClientEntity.builder()
         .name(request.getName().trim())
         .email(email)
-        .plan(ClientPlan.BASIC)
         .joinDate(LocalDate.now())
-        .subscriptionName("Plan Basico")
-        .nextBillingDate(LocalDate.now().plusMonths(1))
         .passwordHash(passwordEncoder.encode(request.getPassword()))
         .role("MEMBER")
         .phone(phone)
@@ -136,4 +132,3 @@ public class AuthService {
     resetTokenRepository.save(resetToken);
   }
 }
-

@@ -1,6 +1,5 @@
 package com.alvar.oasisclub.clients.dto;
 
-import com.alvar.oasisclub.clients.entity.ClientPlan;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,9 +16,6 @@ public class CreateClientRequest {
   @NotBlank
   private String email;
 
-  @NotNull
-  private ClientPlan plan;
-
   @NotBlank
   private String password;
 
@@ -29,5 +25,3 @@ public class CreateClientRequest {
   @NotNull
   private LocalDate birthDate;
 }
-
-

@@ -3,7 +3,6 @@ package com.alvar.oasisclub.reservations.controller;
 import com.alvar.oasisclub.auth.security.AccessControlService;
 import com.alvar.oasisclub.auth.security.AuthenticatedUser;
 import com.alvar.oasisclub.clients.entity.ClientEntity;
-import com.alvar.oasisclub.clients.entity.ClientPlan;
 import com.alvar.oasisclub.clients.service.ClientService;
 import com.alvar.oasisclub.reservations.dto.AvailabilitySlotResponse;
 import com.alvar.oasisclub.reservations.dto.CreateMaintenanceBlockRequest;
@@ -72,16 +71,6 @@ public class ReservationController {
     }
 
     ClientEntity targetClient = clientService.getEntityById(effectiveClientId);
-
-    if (!isAdmin && targetClient.getPlan() == ClientPlan.BASIC) {
-      long dayReservations = reservationService.countActiveClientReservationsByDay(
-          targetClient.getId(),
-          request.getDate()
-      );
-      if (dayReservations >= 2) {
-        throw new IllegalArgumentException("Basic plan allows up to 2 reservations per day");
-      }
-    }
 
     request.setClientId(targetClient.getId().toString());
     request.setUserName(targetClient.getName());

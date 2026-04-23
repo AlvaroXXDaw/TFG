@@ -9,7 +9,5 @@ import org.mapstruct.Mapping;
 public interface AuthMapper {
 
   @Mapping(target = "clientId", expression = "java(client.getId().toString())")
-  @Mapping(target = "plan", expression = "java(client.getPlan().name())")
   AuthSessionResponse toResponse(ClientEntity client, String token);
 }
-

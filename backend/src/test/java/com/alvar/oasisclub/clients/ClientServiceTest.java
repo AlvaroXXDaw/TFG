@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 import com.alvar.oasisclub.clients.dto.ClientResponse;
 import com.alvar.oasisclub.clients.dto.CreateClientRequest;
 import com.alvar.oasisclub.clients.entity.ClientEntity;
-import com.alvar.oasisclub.clients.entity.ClientPlan;
 import com.alvar.oasisclub.clients.exception.ClientEmailAlreadyExistsException;
 import com.alvar.oasisclub.clients.exception.ClientNotFoundException;
 import com.alvar.oasisclub.clients.mapper.ClientMapper;
@@ -39,7 +38,6 @@ class ClientServiceTest {
     CreateClientRequest request = new CreateClientRequest();
     request.setName("Carlos");
     request.setEmail("carlos@test.com");
-    request.setPlan(ClientPlan.BASIC);
     return request;
   }
 
@@ -48,10 +46,7 @@ class ClientServiceTest {
         .id(UUID.randomUUID())
         .name("Carlos")
         .email("carlos@test.com")
-        .plan(ClientPlan.BASIC)
         .joinDate(LocalDate.now())
-        .subscriptionName("Plan Basico")
-        .nextBillingDate(LocalDate.now().plusMonths(1))
         .passwordHash("hash")
         .role("MEMBER")
         .build();
@@ -88,7 +83,7 @@ class ClientServiceTest {
   @Test
   void deleteMissingThrows() {
     UUID id = UUID.randomUUID();
-    when(clientRepository.existsById(id)).thenReturn(false);
+    when(clientRepository.findById(id)).thenReturn(Optional.empty());
 
     assertThrows(ClientNotFoundException.class, () -> clientService.deleteClient(id));
   }
@@ -96,12 +91,18 @@ class ClientServiceTest {
   @Test
   void deleteOk() {
     UUID id = UUID.randomUUID();
-    when(clientRepository.existsById(id)).thenReturn(true);
+    ClientEntity entity = ClientEntity.builder()
+        .id(id)
+        .name("Test")
+        .email("test@test.com")
+        .joinDate(LocalDate.now())
+        .passwordHash("hash")
+        .role("MEMBER")
+        .build();
+    when(clientRepository.findById(id)).thenReturn(Optional.of(entity));
 
     clientService.deleteClient(id);
 
-    verify(clientRepository).deleteById(id);
+    verify(clientRepository).delete(entity);
   }
 }
-
-

@@ -19,7 +19,6 @@ public class ClientMapper {
     dto.setId(entity.getId().toString());
     dto.setName(entity.getName());
     dto.setEmail(entity.getEmail());
-    dto.setPlan(entity.getPlan().name());
     dto.setRole(entity.getRole());
     dto.setJoinDate(entity.getJoinDate());
     dto.setPhone(entity.getPhone());
@@ -31,10 +30,7 @@ public class ClientMapper {
     return ClientEntity.builder()
         .name(request.getName().trim())
         .email(request.getEmail().trim().toLowerCase())
-        .plan(request.getPlan())
         .joinDate(LocalDate.now())
-        .subscriptionName(request.getPlan().name().equals("PREMIUM") ? "Plan Premium" : "Plan Basico")
-        .nextBillingDate(LocalDate.now().plusMonths(1))
         .passwordHash(passwordEncoder.encode(request.getPassword()))
         .role("MEMBER")
         .phone(request.getPhone().trim())
@@ -42,4 +38,3 @@ public class ClientMapper {
         .build();
   }
 }
-

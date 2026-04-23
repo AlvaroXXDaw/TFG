@@ -2,7 +2,6 @@ package com.alvar.oasisclub.clients.service;
 
 import com.alvar.oasisclub.clients.dto.ClientResponse;
 import com.alvar.oasisclub.clients.dto.CreateClientRequest;
-import com.alvar.oasisclub.clients.entity.ClientPlan;
 import com.alvar.oasisclub.clients.entity.ClientEntity;
 import com.alvar.oasisclub.clients.exception.ClientEmailAlreadyExistsException;
 import com.alvar.oasisclub.clients.exception.ClientNotFoundException;
@@ -101,20 +100,5 @@ public class ClientService {
   @Transactional
   public void save(ClientEntity client) {
     clientRepository.save(client);
-  }
-
-  @Transactional
-  public ClientResponse updateClientPlan(UUID id, ClientPlan plan) {
-    ClientEntity client = getEntityById(id);
-
-    if (!"MEMBER".equalsIgnoreCase(client.getRole())) {
-      throw new IllegalArgumentException("Only MEMBER plan can be updated");
-    }
-
-    client.setPlan(plan);
-    client.setSubscriptionName(plan == ClientPlan.PREMIUM ? "Plan Premium" : "Plan Basico");
-
-    ClientEntity saved = clientRepository.save(client);
-    return clientMapper.toResponse(saved);
   }
 }

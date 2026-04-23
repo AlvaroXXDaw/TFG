@@ -3,7 +3,6 @@ package com.alvar.oasisclub.clients.controller;
 import com.alvar.oasisclub.auth.security.AccessControlService;
 import com.alvar.oasisclub.clients.dto.ClientResponse;
 import com.alvar.oasisclub.clients.dto.CreateClientRequest;
-import com.alvar.oasisclub.clients.dto.UpdateClientPlanRequest;
 import com.alvar.oasisclub.clients.service.ClientService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,15 +52,4 @@ public class ClientController {
     clientService.deleteClient(id);
     return ResponseEntity.noContent().build();
   }
-
-  @PatchMapping("/{id}/plan")
-  public ResponseEntity<ClientResponse> updateClientPlan(
-      @PathVariable UUID id,
-      @Valid @RequestBody UpdateClientPlanRequest request,
-      Authentication authentication
-  ) {
-    accessControl.requireAdmin(authentication);
-    return ResponseEntity.ok(clientService.updateClientPlan(id, request.getPlan()));
-  }
 }
-

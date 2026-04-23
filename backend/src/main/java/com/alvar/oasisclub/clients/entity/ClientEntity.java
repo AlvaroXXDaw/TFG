@@ -2,8 +2,6 @@ package com.alvar.oasisclub.clients.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -35,18 +33,8 @@ public class ClientEntity {
   @Column(nullable = false, length = 180, unique = true)
   private String email;
 
-  @Enumerated(EnumType.STRING)
-  @Column(nullable = false, length = 30)
-  private ClientPlan plan;
-
   @Column(name = "join_date", nullable = false)
   private LocalDate joinDate;
-
-  @Column(name = "subscription_name", nullable = false, length = 80)
-  private String subscriptionName;
-
-  @Column(name = "next_billing_date", nullable = false)
-  private LocalDate nextBillingDate;
 
   @Column(name = "password_hash", nullable = false)
   private String passwordHash;
@@ -60,5 +48,3 @@ public class ClientEntity {
   @Column(name = "birth_date")
   private LocalDate birthDate;
 }
-
-

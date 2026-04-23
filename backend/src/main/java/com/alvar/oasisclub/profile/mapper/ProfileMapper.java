@@ -14,8 +14,6 @@ public class ProfileMapper {
     ProfileResponse response = new ProfileResponse();
     response.setClientId(client.getId().toString());
     response.setName(client.getName());
-    response.setSubscriptionName(client.getSubscriptionName());
-    response.setNextBillingDate(client.getNextBillingDate());
     response.setReservations(reservations.stream().map(this::toReservationResponse).toList());
     return response;
   }
@@ -31,4 +29,3 @@ public class ProfileMapper {
     return dto;
   }
 }
-

@@ -16,7 +16,6 @@ import com.alvar.oasisclub.auth.service.AuthService;
 import com.alvar.oasisclub.common.config.AppFrontendUrlProperties;
 import com.alvar.oasisclub.common.email.EmailService;
 import com.alvar.oasisclub.clients.entity.ClientEntity;
-import com.alvar.oasisclub.clients.entity.ClientPlan;
 import com.alvar.oasisclub.clients.service.ClientService;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -59,10 +58,7 @@ class AuthServiceTest {
         .id(UUID.randomUUID())
         .name("Test")
         .email("test@example.com")
-        .plan(ClientPlan.BASIC)
         .joinDate(LocalDate.now())
-        .subscriptionName("Plan Basico")
-        .nextBillingDate(LocalDate.now().plusMonths(1))
         .passwordHash("$2a$10$hashfalso")
         .role("MEMBER")
         .build();
@@ -79,7 +75,7 @@ class AuthServiceTest {
     expected.setToken("jwt-token");
 
     when(clientService.findByEmail("test@example.com")).thenReturn(client);
-    when(passwordEncoder.matches("oasisclub1234", "$2a$10$")).thenReturn(true);
+    when(passwordEncoder.matches("oasisclub1234", "$2a$10$hashfalso")).thenReturn(true);
     when(jwtService.generateToken(client.getId(), client.getEmail(), client.getRole())).thenReturn("jwt-token");
     when(authMapper.toResponse(client, "jwt-token")).thenReturn(expected);
 
@@ -109,5 +105,3 @@ class AuthServiceTest {
     verifyNoInteractions(passwordResetTokenRepository, emailService);
   }
 }
-
-
