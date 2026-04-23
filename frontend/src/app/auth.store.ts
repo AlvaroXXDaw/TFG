@@ -1,11 +1,10 @@
 import {computed, inject, Injectable, PLATFORM_ID, signal} from '@angular/core';
 import {isPlatformBrowser} from '@angular/common';
 
-import {AuthSession, ClientPlan, UserRole} from './modelos/auth.models';
+import {AuthSession, UserRole} from './modelos/auth.models';
 
 const STORAGE_KEY = 'oasisclub.auth.session';
 const VALID_ROLES: UserRole[] = ['ADMIN', 'MEMBER', 'EMPLOYEE'];
-const VALID_PLANS: ClientPlan[] = ['BASIC', 'PREMIUM'];
 
 @Injectable({providedIn: 'root'})
 export class AuthStore {
@@ -86,18 +85,12 @@ export class AuthStore {
       return null;
     }
 
-    const plan =
-      typeof candidate.plan === 'string' && VALID_PLANS.includes(candidate.plan as ClientPlan)
-        ? (candidate.plan as ClientPlan)
-        : 'BASIC';
-
     return {
       token: candidate.token,
       clientId: candidate.clientId,
       name: candidate.name.trim(),
       email: candidate.email.trim().toLowerCase(),
       role: candidate.role as UserRole,
-      plan,
     };
   }
 }

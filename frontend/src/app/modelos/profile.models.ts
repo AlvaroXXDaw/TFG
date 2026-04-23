@@ -1,4 +1,4 @@
-﻿export interface ProfileReservation {
+export interface ProfileReservation {
   id: string;
   sport: string;
   court: string;
@@ -10,7 +10,5 @@
 export interface ProfileSummary {
   clientId: string;
   name: string;
-  subscriptionName: string;
-  nextBillingDate: string;
   reservations: ProfileReservation[];
 }

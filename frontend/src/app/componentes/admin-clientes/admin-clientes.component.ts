@@ -2,7 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { ClientsApiService } from '../../servicios/clients-api.service';
-import { Client, ClientPlan, CreateClientRequest } from '../../modelos/client.models';
+import { Client, CreateClientRequest } from '../../modelos/client.models';
 
 @Component({
   selector: 'app-admin-clientes',
@@ -13,19 +13,15 @@ import { Client, ClientPlan, CreateClientRequest } from '../../modelos/client.mo
 })
 export class AdminClientesComponent implements OnInit {
   private clientsApi = inject(ClientsApiService);
-  readonly plans: ClientPlan[] = ['BASIC', 'PREMIUM'];
   readonly resultLimit = 10;
 
   clients = signal<Client[]>([]);
   loading = signal(true);
   search = signal('');
-  planDrafts = signal<Record<string, ClientPlan>>({});
-  savingPlanId = signal<string | null>(null);
 
   newClient = {
     name: '',
     email: '',
-    plan: 'BASIC' as ClientPlan,
     password: '',
     phone: '',
     birthDate: '',
@@ -40,7 +36,6 @@ export class AdminClientesComponent implements OnInit {
     this.clientsApi.getAll(this.search(), this.resultLimit).subscribe({
       next: (clients) => {
         this.clients.set(clients);
-        this.rebuildPlanDrafts(clients);
         this.loading.set(false);
       },
       error: () => this.loading.set(false),
@@ -59,7 +54,6 @@ export class AdminClientesComponent implements OnInit {
     const request: CreateClientRequest = {
       name: this.newClient.name.trim(),
       email: this.newClient.email.trim().toLowerCase(),
-      plan: this.newClient.plan,
       password: this.newClient.password,
       phone: this.newClient.phone.trim(),
       birthDate: this.newClient.birthDate,
@@ -70,7 +64,6 @@ export class AdminClientesComponent implements OnInit {
         this.newClient.name = '';
         this.newClient.email = '';
         this.newClient.password = '';
-        this.newClient.plan = 'BASIC';
         this.newClient.phone = '';
         this.newClient.birthDate = '';
         this.loadClients();
@@ -84,65 +77,5 @@ export class AdminClientesComponent implements OnInit {
         this.loadClients();
       },
     });
-  }
-
-  onPlanDraftChange(clientId: string, value: string) {
-    if (value !== 'BASIC' && value !== 'PREMIUM') {
-      return;
-    }
-
-    this.planDrafts.update((drafts) => ({
-      ...drafts,
-      [clientId]: value,
-    }));
-  }
-
-  getDraftPlan(client: Client): ClientPlan {
-    const draft = this.planDrafts()[client.id];
-    return draft ?? client.plan;
-  }
-
-  hasPlanChange(client: Client) {
-    return this.getDraftPlan(client) !== client.plan;
-  }
-
-  applyClientPlan(client: Client) {
-    if (client.role !== 'MEMBER') {
-      return;
-    }
-
-    const nextPlan = this.getDraftPlan(client);
-    if (client.plan === nextPlan) {
-      return;
-    }
-
-    this.savingPlanId.set(client.id);
-    this.clientsApi.updateClientPlan(client.id, nextPlan).subscribe({
-      next: (updatedClient) => {
-        this.clients.update((list) =>
-          list.map((current) => (current.id === updatedClient.id ? updatedClient : current)),
-        );
-        this.planDrafts.update((drafts) => ({
-          ...drafts,
-          [updatedClient.id]: updatedClient.plan,
-        }));
-        this.savingPlanId.set(null);
-      },
-      error: () => {
-        this.savingPlanId.set(null);
-        this.loadClients();
-      },
-    });
-  }
-
-  private rebuildPlanDrafts(clients: Client[]) {
-    const drafts: Record<string, ClientPlan> = {};
-    for (const client of clients) {
-      if (client.role === 'MEMBER') {
-        drafts[client.id] = client.plan;
-      }
-    }
-
-    this.planDrafts.set(drafts);
   }
 }

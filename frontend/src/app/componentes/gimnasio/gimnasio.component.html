@@ -1,4 +1,4 @@
-﻿    <div class="min-h-screen bg-[#f8f9fa] pt-24">
+    <div class="min-h-screen bg-[#f8f9fa] pt-24">
       @if (!auth.isLoggedIn()) {
         <div class="h-[calc(100vh-6rem)] flex flex-col items-center justify-center text-center px-6">
           <div class="w-20 h-20 rounded-full bg-white border border-black/5 flex items-center justify-center mb-8 shadow-sm">
@@ -6,7 +6,7 @@
           </div>
           <h2 class="text-4xl font-light tracking-tighter text-emerald-950 uppercase mb-4">Acceso Restringido</h2>
           <p class="text-gray-500 font-light mb-10 max-w-md text-lg">
-            Para ver tu rutina personalizada y gestionar tu plan del gimnasio, inicia sesión.
+            Para ver tu rutina personalizada y gestionar tu gimnasio, inicia sesión.
           </p>
           <a routerLink="/login" class="bg-emerald-950 text-white px-10 py-4 text-xs font-semibold tracking-[0.2em] uppercase hover:bg-emerald-900 transition-colors">
             Iniciar Sesión
@@ -24,32 +24,8 @@
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
             
             <div class="lg:col-span-4">
-              <div class="bg-white p-8 border border-black/5 mb-8">
-                <h3 class="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-12">Plan</h3>
-                
-                <div class="mb-12">
-                  <span class="block text-[6rem] leading-none font-light tracking-tighter text-emerald-950">12</span>
-                  <span class="text-sm font-light text-gray-500">días restantes</span>
-                </div>
-                
-                <div class="space-y-4 pt-8 border-t border-black/5">
-                  <div class="flex justify-between items-center">
-                    <span class="text-sm font-light text-gray-500">Plan</span>
-                    <span class="text-sm font-medium text-emerald-950">Premium</span>
-                  </div>
-                  <div class="flex justify-between items-center">
-                    <span class="text-sm font-light text-gray-500">Renovación</span>
-                    <span class="text-sm font-medium text-emerald-950">15 Abr 2026</span>
-                  </div>
-                </div>
-                
-                <button class="mt-12 w-full border border-emerald-950 text-emerald-950 px-6 py-4 text-xs font-semibold tracking-[0.2em] uppercase hover:bg-emerald-950 hover:text-white transition-colors">
-                  Gestionar
-                </button>
-              </div>
-
               @if (isEditing()) {
-                <div class="bg-white p-8 border border-black/5">
+                <div class="bg-white p-8 border border-black/5 mb-8">
                   <h3 class="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-8">Configurar Rutina</h3>
                   
                   <div class="mb-6">
@@ -202,7 +178,3 @@
         </div>
       }
     </div>
-  
-
-
-

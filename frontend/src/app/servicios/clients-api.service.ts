@@ -6,8 +6,6 @@ import {environment} from '../../environments/environment';
 import {
   Client,
   CreateClientRequest,
-  ClientPlan,
-  UpdateClientPlanRequest,
 } from '../modelos/client.models';
 
 @Injectable({providedIn: 'root'})
@@ -29,10 +27,5 @@ export class ClientsApiService {
 
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
-  }
-
-  updateClientPlan(id: string, plan: ClientPlan): Observable<Client> {
-    const payload: UpdateClientPlanRequest = {plan};
-    return this.http.patch<Client>(`${this.baseUrl}/${id}/plan`, payload);
   }
 }
