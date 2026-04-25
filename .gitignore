@@ -26,14 +26,21 @@ yarn-error.log
 !.vscode/extensions.json
 .history/*
 
+.agent/
+
 frontend/.angular/cache
 .sass-cache/
 /connect.lock
 /coverage
 /libpeerconnection.log
 testem.log
+*.log
 /typings
 __screenshots__/
+
+__pycache__/
+*.py[cod]
+*$py.class
 
 .DS_Store
 Thumbs.db
@@ -47,3 +54,7 @@ docker-compose.dev.yml
 **/Dockerfile.dev
 **/.dockerignore
 frontend/proxy.conf.dev.json
+
+# Archivos de memoria del agente
+MEMORY.md
+.ai_instructions
