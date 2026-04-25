@@ -10,17 +10,19 @@ API REST en Spring Boot para la gestion del club deportivo.
 
 ## Configuracion
 
-Variables importantes para render:
+Variables importantes para Render:
 
 - `DB_URL`
 - `DB_USERNAME`
 - `DB_PASSWORD`
-- `JWT_SECRET`
-- `CORS_ORIGINS`
-- `FRONTEND_URL`
+- `JWT_SECRET`: obligatorio, no puede estar vacio. Debe tener al menos 32 caracteres para firmar los JWT.
+- `CORS_ORIGINS`: `https://tfg-mocha.vercel.app`
+- `FRONTEND_URL`: `https://tfg-mocha.vercel.app`
 - `MAIL_USERNAME`
 - `MAIL_PASSWORD`
 - `MAIL_OVERRIDE_TO`
+
+Si `JWT_SECRET` esta vacio en Render, el login devuelve error 500 y el frontend no puede cargar datos protegidos como pistas u horarios.
 
 ## Arranque en local
 

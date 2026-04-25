@@ -11,6 +11,7 @@ import com.alvar.oasisclub.reservations.entity.SportType;
 import com.alvar.oasisclub.reservations.exception.ReservationNotFoundException;
 import com.alvar.oasisclub.reservations.mapper.ReservationMapper;
 import com.alvar.oasisclub.reservations.repository.ReservationRepository;
+import com.alvar.oasisclub.schedule.service.ScheduleSlotService;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class ReservationService {
   private final ReservationRepository reservationRepository;
   private final ReservationMapper reservationMapper;
   private final CourtRepository courtRepository;
+  private final ScheduleSlotService scheduleSlotService;
 
   @Transactional(readOnly = true)
   public List<ReservationResponse> getReservations(String sport, String status, LocalDate date) {
@@ -128,7 +130,7 @@ public class ReservationService {
 
   @Transactional(readOnly = true)
   public List<AvailabilitySlotResponse> getAvailability(UUID courtId, LocalDate date) {
-    List<String> times = List.of("09:00", "10:30", "12:00", "13:30", "15:00", "16:30", "18:00", "19:30", "21:00");
+    List<String> times = scheduleSlotService.getAllSlots();
     List<ReservationEntity> dayReservations = reservationRepository
         .findByCourt_IdAndReservationDateOrderByReservationTimeAsc(courtId, date);
 
