@@ -42,7 +42,6 @@ public class ScheduleSlotService {
       throw new IllegalArgumentException("El horario " + time + " no existe");
     }
 
-    // Bloquear eliminación si hay reservas futuras pendientes en ese horario
     boolean hasFutureReservations = reservationRepository
         .findAll().stream()
         .anyMatch(r ->

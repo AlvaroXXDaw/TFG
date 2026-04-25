@@ -55,6 +55,5 @@ docker-compose.dev.yml
 **/.dockerignore
 frontend/proxy.conf.dev.json
 
-# Archivos de memoria del agente
 MEMORY.md
 .ai_instructions
