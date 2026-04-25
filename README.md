@@ -68,6 +68,15 @@ npm install
 npm run dev
 ```
 
+`npm run dev` usa el backend local por proxy (`http://localhost:8080`). Para probar el frontend local contra el backend desplegado en Render:
+
+```powershell
+cd frontend
+npm run dev:render
+```
+
+En Render, el backend debe tener `JWT_SECRET` configurado con un valor no vacio de al menos 32 caracteres. Si esta vacio, el login falla y las pantallas admin no cargan pistas ni horarios.
+
 ## Build y test rapido
 
 Backend:
