@@ -5,6 +5,7 @@ import { CourtResponse } from '../../modelos/court.model';
 import { CreateMaintenanceBlockRequest, Reservation, SportType } from '../../modelos/reservation.models';
 import { CourtApiService } from '../../servicios/court-api.service';
 import { ReservationsApiService } from '../../servicios/reservations-api.service';
+import { ScheduleApiService } from '../../servicios/schedule-api.service';
 
 @Component({
   selector: 'app-admin-reservas',
@@ -16,6 +17,7 @@ import { ReservationsApiService } from '../../servicios/reservations-api.service
 export class AdminReservasComponent implements OnInit {
   private reservationsApi = inject(ReservationsApiService);
   private courtApi = inject(CourtApiService);
+  private scheduleApi = inject(ScheduleApiService);
 
   filterSport = signal<'Todos' | 'FUTBOL' | 'PADEL'>('Todos');
   filterCourtId = signal('TODAS');
@@ -25,6 +27,13 @@ export class AdminReservasComponent implements OnInit {
   filterCourts = signal<CourtResponse[]>([]);
   courtsForBlock = signal<CourtResponse[]>([]);
 
+  // Schedule slots (dinámicos desde BD)
+  scheduleSlots = signal<string[]>([]);
+  newSlotTime = '';
+  scheduleError = signal('');
+  scheduleSuccess = signal('');
+  loadError = signal('');
+
   blockForm = {
     sport: 'PADEL' as SportType,
     courtId: '',
@@ -33,11 +42,67 @@ export class AdminReservasComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.loadScheduleSlots();
     this.loadFilterCourts();
     this.loadReservations();
     this.loadBlockCourts();
   }
 
+  // ─── SCHEDULE SLOTS ─────────────────────────
+  private loadScheduleSlots() {
+    this.scheduleApi.getSlots().subscribe({
+      next: (slots) => {
+        this.scheduleSlots.set(slots);
+        this.loadError.set('');
+
+        if (!this.blockForm.time || !slots.includes(this.blockForm.time)) {
+          this.blockForm.time = slots[0] ?? '';
+        }
+      },
+      error: () => {
+        this.scheduleSlots.set([]);
+        this.loadError.set('No se pudieron cargar horarios o pistas. Inicia sesion de nuevo.');
+      },
+    });
+  }
+
+  addSlot() {
+    if (!this.newSlotTime) return;
+    this.scheduleError.set('');
+    this.scheduleSuccess.set('');
+
+    this.scheduleApi.addSlot(this.newSlotTime).subscribe({
+      next: () => {
+        this.scheduleSuccess.set(`Horario ${this.newSlotTime} añadido`);
+        this.newSlotTime = '';
+        this.loadScheduleSlots();
+        this.loadReservations();
+      },
+      error: (err) => {
+        const msg = err?.error?.message || err?.error || 'Error al añadir horario';
+        this.scheduleError.set(typeof msg === 'string' ? msg : 'Error al añadir horario');
+      },
+    });
+  }
+
+  removeSlot(time: string) {
+    this.scheduleError.set('');
+    this.scheduleSuccess.set('');
+
+    this.scheduleApi.removeSlot(time).subscribe({
+      next: () => {
+        this.scheduleSuccess.set(`Horario ${time} eliminado`);
+        this.loadScheduleSlots();
+        this.loadReservations();
+      },
+      error: (err) => {
+        const msg = err?.error?.message || err?.error || 'Error al eliminar horario';
+        this.scheduleError.set(typeof msg === 'string' ? msg : 'Error al eliminar horario');
+      },
+    });
+  }
+
+  // ─── RESERVATIONS ───────────────────────────
   private loadReservations() {
     this.loading.set(true);
     const filters: { sport?: SportType; date?: string } = {
@@ -60,6 +125,7 @@ export class AdminReservasComponent implements OnInit {
     this.courtApi.getCourts(this.blockForm.sport).subscribe({
       next: (courts) => {
         this.courtsForBlock.set(courts);
+        this.loadError.set('');
         if (!courts.some((court) => court.id === this.blockForm.courtId)) {
           this.blockForm.courtId = courts[0]?.id ?? '';
         }
@@ -67,6 +133,7 @@ export class AdminReservasComponent implements OnInit {
       error: () => {
         this.courtsForBlock.set([]);
         this.blockForm.courtId = '';
+        this.loadError.set('No se pudieron cargar horarios o pistas. Inicia sesion de nuevo.');
       },
     });
   }
@@ -79,6 +146,7 @@ export class AdminReservasComponent implements OnInit {
     this.courtApi.getCourts(sport).subscribe({
       next: (courts) => {
         this.filterCourts.set(courts);
+        this.loadError.set('');
         if (this.filterSport() === 'Todos') {
           this.filterCourtId.set('TODAS');
         } else if (courts.length > 0) {
@@ -90,6 +158,7 @@ export class AdminReservasComponent implements OnInit {
       error: () => {
         this.filterCourts.set([]);
         this.filterCourtId.set('TODAS');
+        this.loadError.set('No se pudieron cargar horarios o pistas. Inicia sesion de nuevo.');
       },
     });
   }
@@ -120,8 +189,8 @@ export class AdminReservasComponent implements OnInit {
   }
 
   scheduleTimes() {
-    const baseTimes = ['09:00', '10:30', '12:00', '13:30', '15:00', '16:30', '18:00', '19:30', '21:00'];
-    const timeSet = new Set(baseTimes);
+    const slots = this.scheduleSlots();
+    const timeSet = new Set(slots);
 
     for (const reservation of this.visibleReservations()) {
       timeSet.add(this.normalizeTime(reservation.time));

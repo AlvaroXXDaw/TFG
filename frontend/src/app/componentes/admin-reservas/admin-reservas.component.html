@@ -1,10 +1,14 @@
 <div class="max-w-screen-xl mx-auto px-6 lg:px-12 py-12">
   <div class="mb-12">
     <h2 class="text-4xl font-light tracking-tighter text-emerald-950 uppercase mb-2">Gestion de Reservas</h2>
-    <p class="text-gray-500 font-light">Vista de calendario por horas y detalle de reservas del dia.</p>
+    <p class="text-gray-500 font-light">Vista de calendario por horas, gestion de horarios y detalle de reservas del dia.</p>
+    @if (loadError()) {
+      <p class="mt-4 px-3 py-2 text-xs font-semibold text-red-700 bg-red-50 border border-red-200 inline-block">{{ loadError() }}</p>
+    }
   </div>
 
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- ─── CALENDARIO (2/3) ─── -->
     <div class="lg:col-span-2 bg-white border border-black/5 p-6 md:p-8">
       <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
         <div>
@@ -25,7 +29,7 @@
               [class.text-white]="filterSport() === 'Todos'"
               [class.bg-white]="filterSport() !== 'Todos'"
               [class.text-emerald-950]="filterSport() !== 'Todos'"
-              class="px-4 py-2 text-[10px] font-semibold tracking-[0.2em] uppercase border border-emerald-950 transition-colors"
+              class="px-4 py-2 text-[10px] font-semibold tracking-[0.2em] uppercase border border-emerald-950 transition-colors cursor-pointer"
             >
               Todos
             </button>
@@ -35,7 +39,7 @@
               [class.text-white]="filterSport() === 'FUTBOL'"
               [class.bg-white]="filterSport() !== 'FUTBOL'"
               [class.text-emerald-950]="filterSport() !== 'FUTBOL'"
-              class="px-4 py-2 text-[10px] font-semibold tracking-[0.2em] uppercase border border-emerald-950 transition-colors"
+              class="px-4 py-2 text-[10px] font-semibold tracking-[0.2em] uppercase border border-emerald-950 transition-colors cursor-pointer"
             >
               Futbol
             </button>
@@ -45,7 +49,7 @@
               [class.text-white]="filterSport() === 'PADEL'"
               [class.bg-white]="filterSport() !== 'PADEL'"
               [class.text-emerald-950]="filterSport() !== 'PADEL'"
-              class="px-4 py-2 text-[10px] font-semibold tracking-[0.2em] uppercase border border-emerald-950 transition-colors"
+              class="px-4 py-2 text-[10px] font-semibold tracking-[0.2em] uppercase border border-emerald-950 transition-colors cursor-pointer"
             >
               Padel
             </button>
@@ -107,14 +111,14 @@
                   @if (res.status === 'MAINTENANCE') {
                     <button
                       (click)="removeMaintenance(res.id)"
-                      class="text-xs font-semibold tracking-[0.1em] uppercase text-emerald-700 hover:text-emerald-900"
+                      class="text-xs font-semibold tracking-[0.1em] uppercase text-emerald-700 hover:text-emerald-900 cursor-pointer"
                     >
                       Habilitar
                     </button>
                   } @else {
                     <button
                       (click)="cancelReservation(res.id)"
-                      class="text-xs font-semibold tracking-[0.1em] uppercase text-red-500 hover:text-red-700"
+                      class="text-xs font-semibold tracking-[0.1em] uppercase text-red-500 hover:text-red-700 cursor-pointer"
                     >
                       Cancelar
                     </button>
@@ -127,54 +131,113 @@
       </div>
     </div>
 
-    <div class="bg-white border border-black/5 p-6 md:p-8 h-fit">
-      <h3 class="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-8">Bloquear por Mantenimiento</h3>
+    <!-- ─── SIDEBAR (1/3) ─── -->
+    <div class="space-y-8">
 
-      <form (submit)="blockCourt($event)" class="space-y-6">
-        <div>
-          <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Deporte</span>
-          <select
-            [(ngModel)]="blockForm.sport"
-            (ngModelChange)="onBlockSportChange($event)"
-            name="sport"
-            class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm"
-          >
-            <option value="FUTBOL">Futbol</option>
-            <option value="PADEL">Padel</option>
-          </select>
-        </div>
+      <!-- GESTIÓN DE HORARIOS -->
+      <div class="bg-white border border-black/5 p-6 md:p-8">
+        <h3 class="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-6">Gestión de Horarios</h3>
+        <p class="text-xs text-gray-400 mb-6">Añade o elimina franjas horarias disponibles para todas las pistas.</p>
 
-        <div>
-          <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Pista</span>
-          <select
-            [(ngModel)]="blockForm.courtId"
-            name="courtId"
-            class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm"
-          >
-            @for (court of courtsForBlock(); track court.id) {
-              <option [value]="court.id">{{ court.name }}</option>
-            }
-            @if (courtsForBlock().length === 0) {
-              <option value="" disabled>Sin pistas disponibles</option>
-            }
-          </select>
-        </div>
-
-        <div class="grid grid-cols-2 gap-4">
-          <div>
-            <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Fecha</span>
-            <input type="date" [(ngModel)]="blockForm.date" name="date" class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm">
+        <!-- Feedback -->
+        @if (scheduleError()) {
+          <div class="mb-4 px-3 py-2 bg-red-50 border border-red-200 text-xs text-red-700 font-medium">
+            {{ scheduleError() }}
           </div>
-          <div>
-            <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Hora</span>
-            <input type="time" [(ngModel)]="blockForm.time" name="time" class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm">
+        }
+        @if (scheduleSuccess()) {
+          <div class="mb-4 px-3 py-2 bg-emerald-50 border border-emerald-200 text-xs text-emerald-700 font-medium">
+            {{ scheduleSuccess() }}
           </div>
+        }
+
+        <!-- Lista de slots -->
+        <div class="space-y-2 mb-6 max-h-64 overflow-y-auto">
+          @for (slot of scheduleSlots(); track slot) {
+            <div class="flex items-center justify-between px-3 py-2 border border-black/5 hover:border-black/15 transition-colors group">
+              <span class="text-sm font-medium text-emerald-950 tracking-wide">{{ slot }}</span>
+              <button
+                (click)="removeSlot(slot)"
+                class="text-[10px] font-semibold tracking-[0.1em] uppercase text-gray-300 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100 cursor-pointer"
+                title="Eliminar horario"
+              >
+                ✕
+              </button>
+            </div>
+          }
+          @if (scheduleSlots().length === 0) {
+            <p class="text-xs text-gray-400 italic py-2">No hay horarios configurados.</p>
+          }
         </div>
 
-        <button type="submit" class="w-full bg-red-900 text-white py-4 text-xs font-semibold tracking-[0.2em] uppercase hover:bg-red-950 transition-colors mt-4">
-          Bloquear Pista
-        </button>
-      </form>
+        <!-- Añadir slot -->
+        <div class="flex gap-2">
+          <input
+            type="time"
+            [(ngModel)]="newSlotTime"
+            class="flex-1 border border-black/10 px-3 py-2 text-sm text-emerald-950 focus:border-emerald-950 focus:outline-none"
+            placeholder="HH:mm"
+          >
+          <button
+            (click)="addSlot()"
+            class="px-4 py-2 bg-emerald-950 text-white text-[10px] font-semibold tracking-[0.15em] uppercase hover:bg-emerald-900 transition-colors cursor-pointer"
+          >
+            Añadir
+          </button>
+        </div>
+      </div>
+
+      <!-- BLOQUEAR POR MANTENIMIENTO -->
+      <div class="bg-white border border-black/5 p-6 md:p-8">
+        <h3 class="text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 mb-8">Bloquear por Mantenimiento</h3>
+
+        <form (submit)="blockCourt($event)" class="space-y-6">
+          <div>
+            <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Deporte</span>
+            <select
+              [(ngModel)]="blockForm.sport"
+              (ngModelChange)="onBlockSportChange($event)"
+              name="sport"
+              class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm"
+            >
+              <option value="FUTBOL">Futbol</option>
+              <option value="PADEL">Padel</option>
+            </select>
+          </div>
+
+          <div>
+            <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Pista</span>
+            <select
+              [(ngModel)]="blockForm.courtId"
+              name="courtId"
+              class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm"
+            >
+              @for (court of courtsForBlock(); track court.id) {
+                <option [value]="court.id">{{ court.name }}</option>
+              }
+              @if (courtsForBlock().length === 0) {
+                <option value="" disabled>Sin pistas disponibles</option>
+              }
+            </select>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Fecha</span>
+              <input type="date" [(ngModel)]="blockForm.date" name="date" class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm">
+            </div>
+            <div>
+              <span class="block text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase mb-2">Hora</span>
+              <input type="time" [(ngModel)]="blockForm.time" name="time" class="w-full border-b border-black/10 py-2 text-emerald-950 focus:border-emerald-950 focus:outline-none bg-transparent text-sm">
+            </div>
+          </div>
+
+          <button type="submit" class="w-full bg-red-900 text-white py-4 text-xs font-semibold tracking-[0.2em] uppercase hover:bg-red-950 transition-colors mt-4 cursor-pointer">
+            Bloquear Pista
+          </button>
+        </form>
+      </div>
+
     </div>
   </div>
 </div>
