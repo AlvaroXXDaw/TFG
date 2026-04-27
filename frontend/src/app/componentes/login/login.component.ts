@@ -61,7 +61,7 @@ export class LoginComponent {
     this.loading.set(false);
 
     const targetRoute = session.role === 'ADMIN' ? '/admin' : '/';
-    this.router.navigate([targetRoute]);
+    this.router.navigate([targetRoute], { replaceUrl: true });
   }
 
   private handleError(error: HttpErrorResponse) {
