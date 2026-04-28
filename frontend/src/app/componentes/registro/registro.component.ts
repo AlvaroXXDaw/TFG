@@ -53,7 +53,7 @@ export class RegistroComponent {
       next: (session) => {
         this.authStore.setSession(session);
         this.loading.set(false);
-        this.router.navigate(['/']);
+        this.router.navigate(['/'], { replaceUrl: true });
       },
       error: (error: HttpErrorResponse) => {
         this.loading.set(false);
