@@ -1,77 +1,108 @@
-<div class="min-h-screen bg-white flex flex-col justify-center relative">
-  <a routerLink="/login" class="absolute top-8 left-6 lg:left-12 flex items-center text-xs font-semibold tracking-[0.2em] uppercase text-gray-400 hover:text-emerald-950 transition-colors">
-    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-    Volver al login
-  </a>
+<div class="min-h-screen bg-white flex w-full overflow-hidden">
+  
+  <!-- LADO IZQUIERDO: FORMULARIO -->
+  <div class="w-full lg:w-[45%] xl:w-[40%] min-h-screen flex flex-col justify-between p-8 lg:p-12 xl:p-16 relative z-10 bg-white">
+    
+    <!-- Top: Logo & Back -->
+    <div>
+      <a routerLink="/login" class="inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.15em] uppercase text-gray-400 hover:text-emerald-950 transition-colors mb-10">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        Volver al login
+      </a>
+      <a routerLink="/" class="text-2xl tracking-tighter text-emerald-950 block">
+        OASIS<span class="font-bold">CLUB</span>
+      </a>
+    </div>
 
-  <div class="w-full max-w-md mx-auto px-6">
-    @if (!sent()) {
-      <div class="mb-16 text-center">
-        <h2 class="text-4xl font-light tracking-tighter text-emerald-950 uppercase mb-4">
-          Recuperar clave
-        </h2>
-        <p class="text-sm font-light text-gray-500">
-          Introduce tu correo y te enviaremos un enlace para restablecer tu contraseña.
+    <!-- Middle: Formulario -->
+    <div class="w-full max-w-sm mx-auto my-auto py-12">
+      @if (!sent()) {
+        <p class="text-[10px] font-bold tracking-[0.3em] uppercase text-gray-400 mb-6">RESTABLECER CONTRASEÑA</p>
+        <h1 class="leading-[1.1] font-normal text-gray-900 mb-12" style="font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 4vw, 3rem);">
+          Recuperar tu<br>
+          <span class="italic text-[#0B2118]">clave.</span>
+        </h1>
+        <p class="text-sm font-light text-gray-500 mb-8">
+          Introduce tu correo y te enviaremos un enlace para crear una nueva contraseña.
         </p>
-      </div>
 
-      <form class="space-y-8" #forgotForm="ngForm" (ngSubmit)="submitForgotPassword(forgotForm)">
-        <div class="relative">
-          <input
-            [(ngModel)]="email"
-            #emailModel="ngModel"
-            name="email"
-            type="email"
-            id="email"
-            class="block w-full border-0 border-b border-gray-200 py-4 text-emerald-950 placeholder-transparent focus:border-emerald-950 focus:ring-0 peer bg-transparent transition-colors"
-            placeholder="Correo"
-            required
-            email
-          >
-          <label for="email" class="absolute left-0 -top-3.5 text-xs font-semibold tracking-[0.1em] text-gray-400 uppercase transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-4 peer-placeholder-shown:font-light peer-placeholder-shown:tracking-normal peer-focus:-top-3.5 peer-focus:text-xs peer-focus:font-semibold peer-focus:tracking-[0.1em] peer-focus:text-emerald-950">
-            Correo electronico
-          </label>
+        <form class="space-y-8" #forgotForm="ngForm" (ngSubmit)="submitForgotPassword(forgotForm)">
+          <!-- Campo: Email -->
+          <div class="relative">
+            <input
+              [(ngModel)]="email"
+              #emailModel="ngModel"
+              name="email"
+              type="email"
+              id="email"
+              class="block w-full border-0 border-b border-gray-200 py-3 text-emerald-950 placeholder-transparent focus:border-emerald-950 focus:ring-0 peer bg-transparent transition-colors text-sm font-light"
+              placeholder="Correo electrónico"
+              required
+              email
+            >
+            <label for="email" class="absolute left-0 -top-3.5 text-[10px] font-semibold tracking-[0.1em] text-gray-400 uppercase transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-placeholder-shown:font-light peer-placeholder-shown:tracking-normal peer-focus:-top-3.5 peer-focus:text-[10px] peer-focus:font-semibold peer-focus:tracking-[0.1em] peer-focus:text-emerald-950">
+              Correo electrónico
+            </label>
 
-          @if (emailModel.invalid && (emailModel.dirty || emailModel.touched)) {
-            @if (emailModel.errors?.['required']) {
-              <p class="mt-2 text-xs text-red-600">El correo es obligatorio.</p>
+            @if (emailModel.invalid && (emailModel.dirty || emailModel.touched)) {
+              @if (emailModel.errors?.['required']) {
+                <p class="mt-2 text-[11px] text-red-500 font-light">El correo es obligatorio.</p>
+              }
+              @if (emailModel.errors?.['email']) {
+                <p class="mt-2 text-[11px] text-red-500 font-light">Introduce un correo válido.</p>
+              }
             }
-            @if (emailModel.errors?.['email']) {
-              <p class="mt-2 text-xs text-red-600">Introduce un correo valido.</p>
-            }
-          }
-        </div>
-
-        @if (errorMessage()) {
-          <div class="flex items-center gap-2 text-sm text-red-500 pt-2">
-            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <span class="font-light">{{ errorMessage() }}</span>
           </div>
-        }
 
-        <button [disabled]="loading() || forgotForm.invalid" type="submit" class="w-full bg-emerald-950 text-white py-5 text-xs font-semibold tracking-[0.2em] uppercase hover:bg-emerald-900 transition-colors mt-8 disabled:opacity-60 disabled:cursor-not-allowed">
-          @if (loading()) {
-            Enviando...
-          } @else {
-            Enviar enlace
+          <!-- Mensaje de Error Global -->
+          @if (errorMessage()) {
+            <div class="flex items-center gap-2 text-[13px] text-red-500 pt-2 bg-red-50/50 p-3 border-l-2 border-red-500">
+              <span class="font-light">{{ errorMessage() }}</span>
+            </div>
           }
-        </button>
-      </form>
-    } @else {
-      <div class="text-center">
-        <div class="w-20 h-20 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-8 mx-auto">
-          <svg class="w-8 h-8 text-emerald-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+
+          <!-- Botón Enviar -->
+          <button [disabled]="loading() || forgotForm.invalid" type="submit" class="w-full bg-[#0B2118] text-white py-4 text-[11px] font-medium tracking-[0.15em] uppercase hover:bg-emerald-900 transition-colors mt-8 disabled:opacity-60 disabled:cursor-not-allowed">
+            @if (loading()) {
+              Enviando...
+            } @else {
+              Enviar enlace
+            }
+          </button>
+        </form>
+      } @else {
+        <!-- Estado: Enviado -->
+        <div class="text-left">
+          <div class="w-16 h-16 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center mb-8">
+            <svg class="w-6 h-6 text-emerald-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+          </div>
+          <h1 class="leading-[1.1] font-normal text-gray-900 mb-6" style="font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 4vw, 3rem);">
+            Correo<br>
+            <span class="italic text-[#0B2118]">enviado.</span>
+          </h1>
+          <p class="text-[13px] font-light text-gray-500 mb-10 leading-relaxed">
+            Revisa tu bandeja de entrada y la carpeta de spam. El enlace para restablecer tu contraseña expirará en 30 minutos.
+          </p>
+          <a routerLink="/login" class="inline-block bg-[#0B2118] text-white w-full text-center py-4 text-[11px] font-medium tracking-[0.15em] uppercase hover:bg-emerald-900 transition-colors">
+            Volver al login
+          </a>
         </div>
-        <h2 class="text-4xl font-light tracking-tighter text-emerald-950 uppercase mb-4">
-          Correo enviado
-        </h2>
-        <p class="text-sm font-light text-gray-500 mb-12 leading-relaxed">
-          Revisa tu bandeja de entrada y spam. El enlace expira en 30 minutos.
-        </p>
-        <a routerLink="/login" class="inline-block bg-emerald-950 text-white px-10 py-4 text-xs font-semibold tracking-[0.2em] uppercase hover:bg-emerald-900 transition-colors">
-          Volver al login
-        </a>
-      </div>
-    }
+      }
+    </div>
+
+    <!-- Bottom: Spacer para mantener layout -->
+    <div class="text-[13px] font-light text-gray-500 opacity-0 pointer-events-none">
+      Spacer
+    </div>
+
   </div>
+
+  <!-- LADO DERECHO: IMAGEN (Solo Desktop) -->
+  <div class="hidden lg:block lg:w-[55%] xl:w-[60%] h-screen relative bg-[#FAFAFA]">
+    <div class="absolute inset-0 z-0">
+      <img src="images/club-hero.png" alt="Oasis Club Premium" class="w-full h-full object-cover object-center grayscale-[20%]" 
+        style="mask-image: linear-gradient(to right, transparent 0%, white 15%, white 100%); -webkit-mask-image: linear-gradient(to right, transparent 0%, white 15%, white 100%);" referrerpolicy="no-referrer">
+    </div>
+  </div>
+
 </div>
