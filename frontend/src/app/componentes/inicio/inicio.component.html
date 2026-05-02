@@ -1,17 +1,12 @@
 <div class="min-h-screen bg-white">
 
   <!-- HERO -->
-  <div class="relative w-full h-[65vh] lg:h-[75vh] flex items-center overflow-hidden pt-20">
-    <!-- Fondo foto con mask fade hacia la izquierda -->
-    <div class="absolute inset-0 z-0">
-      <img src="images/club-hero.png" alt="Oasis Club" class="absolute right-0 h-full w-full lg:w-[85%] object-cover object-center" 
-        style="mask-image: linear-gradient(to right, white 0%, white 15%, transparent 60%); -webkit-mask-image: linear-gradient(to right, white 0%, white 15%, transparent 60%); transform: scaleX(-1);">
-    </div>
-
+  <section class="home-hero" aria-label="Oasis Club">
     <!-- Contenido izquierda -->
-    <div class="relative z-10 max-w-screen-2xl mx-auto px-6 lg:px-12 w-full">
-      <div class="max-w-2xl">
-        <h1 class="leading-[1.1] font-normal text-gray-900 mb-4" style="font-family: 'Playfair Display', serif; font-size: clamp(3.5rem, 8vw, 7rem);">
+    <div class="home-hero__content">
+      <div class="home-hero__copy">
+        <h1 class="leading-[1.1] font-normal text-gray-900 mb-4"
+          style="font-family: 'Playfair Display', serif; font-size: clamp(3.5rem, 8vw, 7rem);">
           El deporte,<br>
           <span class="italic text-[#0B2118]">elevado.</span>
         </h1>
@@ -20,17 +15,24 @@
           y un entorno diseñado para inspirar tu mejor versión,
           cada día.
         </p>
-        <div class="flex items-center gap-4">
-          <a routerLink="/instalaciones/padel" class="inline-block bg-[#0B2118] text-white px-8 py-4 text-[13px] font-medium hover:bg-emerald-900 transition-all duration-300">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <a routerLink="/instalaciones/padel"
+            class="inline-block bg-[#0B2118] text-white px-8 py-4 text-[13px] font-medium hover:bg-emerald-900 transition-all duration-300">
             Descubre el club
           </a>
-          <a routerLink="/reservar" class="inline-block bg-white border border-[#0B2118] text-[#0B2118] px-8 py-4 text-[13px] font-medium hover:bg-gray-50 transition-all duration-300">
+          <a routerLink="/reservar"
+            class="inline-block bg-white border border-[#0B2118] text-[#0B2118] px-8 py-4 text-[13px] font-medium hover:bg-gray-50 transition-all duration-300">
             Explorar espacios
           </a>
         </div>
       </div>
     </div>
-  </div>
+
+    <!-- Imagen derecha -->
+    <div class="home-hero__media">
+      <img src="images/club-hero.png" alt="Interior premium de Oasis Club" class="home-hero__image">
+    </div>
+  </section>
 
 
   <!-- SECCIÓN ESPACIOS -->
@@ -40,7 +42,8 @@
       <!-- Texto descriptivo izquierda -->
       <div class="lg:col-span-3 lg:pt-4">
         <p class="text-[10px] font-bold tracking-[0.3em] uppercase text-gray-400 mb-6">Espacios para superarte</p>
-        <h2 class="text-emerald-950 leading-[1.1] mb-8" style="font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 3rem);">
+        <h2 class="text-emerald-950 leading-[1.1] mb-8"
+          style="font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 3rem);">
           Diseñados para<br>
           <span class="italic">tu mejor versión.</span>
         </h2>
@@ -53,32 +56,41 @@
 
       <!-- Grid 3 tarjetas derecha -->
       <div class="lg:col-span-9 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        
+
         <!-- PÁDEL -->
-        <a routerLink="/instalaciones/padel" class="group relative aspect-[3/4] overflow-hidden cursor-pointer bg-white">
-          <img src="images/padel.png" alt="Pádel" class="w-full h-full object-cover mix-blend-multiply opacity-90 group-hover:scale-105 transition-transform duration-1000 ease-out">
+        <a routerLink="/instalaciones/padel"
+          class="group relative aspect-[3/4] overflow-hidden cursor-pointer bg-white">
+          <img src="images/padel.png" alt="Pádel"
+            class="w-full h-full object-cover mix-blend-multiply opacity-90 group-hover:scale-105 transition-transform duration-1000 ease-out">
           <div class="absolute inset-0 bg-[#0B2118]/10 mix-blend-multiply"></div>
-          <div class="absolute inset-0 p-6 flex flex-col justify-end text-white bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+          <div
+            class="absolute inset-0 p-6 flex flex-col justify-end text-white bg-gradient-to-t from-black/80 via-black/30 to-transparent">
             <h3 class="text-lg font-medium mb-1">Pádel</h3>
             <p class="text-sm font-light opacity-90">Canchas profesionales</p>
           </div>
         </a>
 
         <!-- FÚTBOL -->
-        <a routerLink="/instalaciones/futbol" class="group relative aspect-[3/4] overflow-hidden cursor-pointer bg-white">
-          <img src="images/futbol.png" alt="Fútbol" class="w-full h-full object-cover mix-blend-multiply opacity-90 group-hover:scale-105 transition-transform duration-1000 ease-out">
+        <a routerLink="/instalaciones/futbol"
+          class="group relative aspect-[3/4] overflow-hidden cursor-pointer bg-white">
+          <img src="images/futbol.png" alt="Fútbol"
+            class="w-full h-full object-cover mix-blend-multiply opacity-90 group-hover:scale-105 transition-transform duration-1000 ease-out">
           <div class="absolute inset-0 bg-[#0B2118]/10 mix-blend-multiply"></div>
-          <div class="absolute inset-0 p-6 flex flex-col justify-end text-white bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+          <div
+            class="absolute inset-0 p-6 flex flex-col justify-end text-white bg-gradient-to-t from-black/80 via-black/30 to-transparent">
             <h3 class="text-lg font-medium mb-1">Fútbol</h3>
             <p class="text-sm font-light opacity-90">Cancha indoor</p>
           </div>
         </a>
 
         <!-- FITNESS -->
-        <a routerLink="/instalaciones/gimnasio" class="group relative aspect-[3/4] overflow-hidden cursor-pointer bg-white">
-          <img src="images/gimnasio.png" alt="Fitness" class="w-full h-full object-cover mix-blend-multiply opacity-90 group-hover:scale-105 transition-transform duration-1000 ease-out">
+        <a routerLink="/instalaciones/gimnasio"
+          class="group relative aspect-[3/4] overflow-hidden cursor-pointer bg-white">
+          <img src="images/gimnasio.png" alt="Fitness"
+            class="w-full h-full object-cover mix-blend-multiply opacity-90 group-hover:scale-105 transition-transform duration-1000 ease-out">
           <div class="absolute inset-0 bg-[#0B2118]/10 mix-blend-multiply"></div>
-          <div class="absolute inset-0 p-6 flex flex-col justify-end text-white bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+          <div
+            class="absolute inset-0 p-6 flex flex-col justify-end text-white bg-gradient-to-t from-black/80 via-black/30 to-transparent">
             <h3 class="text-lg font-medium mb-1">Fitness</h3>
             <p class="text-sm font-light opacity-90">Equipamiento premium</p>
           </div>
