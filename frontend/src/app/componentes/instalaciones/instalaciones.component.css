@@ -1,0 +1,41 @@
+.facility-hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  overflow: hidden;
+  padding: 8rem 1.5rem 4rem;
+  background: #ffffff;
+}
+
+.facility-hero__content {
+  display: flex;
+  align-items: center;
+}
+
+.facility-hero__copy {
+  max-width: 34rem;
+}
+
+.facility-hero__media {
+  position: relative;
+  overflow: hidden;
+  background: #07120d;
+}
+
+.facility-hero__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: center;
+  filter: contrast(1.04) saturate(0.92);
+}
+
+@media (min-width: 1024px) {
+  .facility-hero {
+    grid-template-columns: minmax(28rem, 36vw) minmax(0, 1fr);
+    align-items: center;
+    min-height: 75vh;
+    padding: 9rem clamp(3rem, 6vw, 7rem) 5rem;
+  }
+}
