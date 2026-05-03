@@ -2,34 +2,35 @@
 <div class="min-h-screen bg-white">
 
   <!-- 1. HERO PRINCIPAL -->
-  <div class="relative w-full h-[65vh] lg:h-[75vh] flex items-center overflow-hidden pt-20">
-    <!-- Imagen difuminada hacia la izquierda -->
-    <div class="absolute inset-0 z-0">
-      <img [src]="f.heroImage" [alt]="f.sportLabel" class="absolute right-0 h-full w-full lg:w-[75%] object-cover object-center" 
-        style="mask-image: linear-gradient(to right, white 0%, white 10%, transparent 60%); -webkit-mask-image: linear-gradient(to right, white 0%, white 10%, transparent 60%); transform: scaleX(-1);" referrerpolicy="no-referrer">
-    </div>
-
-    <div class="relative z-10 max-w-screen-2xl mx-auto px-6 lg:px-12 w-full">
-      <div class="max-w-2xl">
+  <section class="facility-hero">
+    <div class="facility-hero__content">
+      <div class="facility-hero__copy">
         <p class="text-[10px] font-bold tracking-[0.3em] uppercase text-gray-400 mb-6">{{ f.sportLabel }}</p>
-        <h1 class="leading-[1.1] font-normal text-gray-900 mb-4" style="font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 6vw, 5.5rem);">
+        <h1 class="leading-[1.1] font-normal text-gray-900 mb-4"
+          style="font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 6vw, 5.5rem);">
           {{ f.heroTitle }}<br>
           <span class="italic text-[#0B2118]">{{ f.heroAccentText }}</span>
         </h1>
         <p class="text-[15px] lg:text-[16px] font-light text-gray-500 leading-relaxed mb-6 max-w-sm">
           {{ f.heroDescription }}
         </p>
-        <div class="flex items-center gap-4">
-          <a [routerLink]="f.primaryButtonRoute" class="inline-block bg-[#0B2118] text-white px-8 py-4 text-[12px] font-medium tracking-[0.1em] uppercase hover:bg-emerald-900 transition-all duration-300">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <a [routerLink]="f.primaryButtonRoute"
+            class="inline-block bg-[#0B2118] text-white px-8 py-4 text-[12px] font-medium tracking-[0.1em] uppercase hover:bg-emerald-900 transition-all duration-300">
             {{ f.primaryButtonText }}
           </a>
-          <a [routerLink]="f.secondaryButtonRoute" class="inline-block bg-white border border-[#0B2118] text-[#0B2118] px-8 py-4 text-[12px] font-medium tracking-[0.1em] uppercase hover:bg-gray-50 transition-all duration-300">
+          <a [routerLink]="f.secondaryButtonRoute"
+            class="inline-block bg-white border border-[#0B2118] text-[#0B2118] px-8 py-4 text-[12px] font-medium tracking-[0.1em] uppercase hover:bg-gray-50 transition-all duration-300">
             {{ f.secondaryButtonText }}
           </a>
         </div>
       </div>
     </div>
-  </div>
+
+    <div class="facility-hero__media">
+      <img [src]="f.heroImage" [alt]="f.sportLabel" class="facility-hero__image" referrerpolicy="no-referrer">
+    </div>
+  </section>
 
   <!-- 2. FILA DE 4 CARDS VISUALES -->
   <div class="max-w-screen-2xl mx-auto px-6 lg:px-12 pb-12">
