@@ -77,4 +77,11 @@ export class PerfilComponent implements OnInit {
     this.myRoutine.set(updatedRoutine);
     this.gymApi.update(session.clientId, { days: updatedRoutine }).subscribe();
   }
+
+  statusLabel(status: string) {
+    if (status === 'PENDING') return 'Pendiente de pago';
+    if (status === 'CONFIRMED') return 'Confirmada';
+    if (status === 'MAINTENANCE') return 'Mantenimiento';
+    return status;
+  }
 }
