@@ -28,7 +28,7 @@
               @for (reservation of myReservations(); track reservation.id) {
                 <div class="border border-black/10 p-4">
                   <p class="text-sm font-medium text-emerald-950">{{ reservation.sport }} - {{ reservation.court }}</p>
-                  <p class="text-sm text-gray-500">{{ reservation.date }} · {{ reservation.time }} · {{ reservation.status }}</p>
+                  <p class="text-sm text-gray-500">{{ reservation.date }} · {{ reservation.time }} · {{ statusLabel(reservation.status) }}</p>
                   <button
                     type="button"
                     (click)="deleteReservation(reservation.id)"
