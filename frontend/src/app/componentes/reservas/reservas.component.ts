@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
 import { AuthStore } from '../../auth.store';
 import { CourtResponse } from '../../modelos/court.model';
-import { AvailabilitySlot, CreateReservationRequest } from '../../modelos/reservation.models';
+import { AvailabilitySlot } from '../../modelos/reservation.models';
 import { CourtApiService } from '../../servicios/court-api.service';
+import { PaymentsApiService } from '../../servicios/payments-api.service';
 import { ReservationsApiService } from '../../servicios/reservations-api.service';
 
 @Component({
@@ -21,6 +23,7 @@ export class ReservasComponent implements OnInit {
 
   private reservationsService = inject(ReservationsApiService);
   private courtService = inject(CourtApiService);
+  private paymentsService = inject(PaymentsApiService);
 
   currentStep = signal<number>(1);
   selectedSport = signal<'PADEL' | 'FUTBOL' | null>(null);
@@ -123,29 +126,42 @@ export class ReservasComponent implements OnInit {
     this.isSubmitting.set(true);
     this.errorMessage.set('');
 
-    const request: CreateReservationRequest = {
-      clientId: session.clientId,
-      userName: session.name,
+    const request = {
       sport,
       courtId: court.id,
       date: this.formatDate(this.selectedDate()),
       time: `${time}:00`,
     };
 
-    this.reservationsService.create(request).subscribe({
-      next: () => {
-        this.isSubmitting.set(false);
-        this.successMessage.set(
-          `Reserva confirmada en ${court.name} para el ${this.formatDate(this.selectedDate())} a las ${time}.`,
-        );
-        this.currentStep.set(5);
+    this.paymentsService.createCheckoutSession(request).subscribe({
+      next: (response) => {
+        window.location.assign(response.checkoutUrl);
       },
       error: (err: unknown) => {
         console.error('Reservation error:', err);
         this.isSubmitting.set(false);
-        this.errorMessage.set('Error al procesar la reserva. Inténtalo de nuevo.');
+        this.errorMessage.set(this.paymentErrorMessage(err));
       },
     });
+  }
+
+  private paymentErrorMessage(error: unknown): string {
+    if (error instanceof HttpErrorResponse) {
+      if (error.status === 0) {
+        return 'No se pudo conectar con el backend.';
+      }
+      if (typeof error.error?.message === 'string' && error.error.message.trim()) {
+        return error.error.message;
+      }
+    }
+    return 'Error al procesar la reserva. Intentalo de nuevo.';
+  }
+
+  reservationPrice(): string {
+    const sport = this.selectedSport();
+    if (sport === 'FUTBOL') return '100 EUR';
+    if (sport === 'PADEL') return '50 EUR';
+    return '';
   }
 
   private formatDate(d: Date): string {
