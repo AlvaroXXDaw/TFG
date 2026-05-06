@@ -1,0 +1,129 @@
+<div class="min-h-screen bg-white">
+
+  <!-- HERO -->
+  <section class="tarifas-hero">
+    <div class="max-w-screen-2xl mx-auto px-6 lg:px-12">
+      <p class="text-[10px] font-bold tracking-[0.3em] uppercase text-gray-400 mb-6">Precios</p>
+      <h1 class="leading-[1.1] font-normal text-gray-900 mb-4"
+        style="font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 4.5rem);">
+        Nuestras <span class="italic text-[#0B2118]">tarifas.</span>
+      </h1>
+      <p class="text-[15px] lg:text-[17px] font-light text-gray-500 leading-relaxed max-w-lg">
+        Sin permanencia ni cuotas ocultas. Reserva la pista que quieras, paga solo cuando juegas.
+      </p>
+    </div>
+  </section>
+
+  <!-- PRICING CARDS -->
+  <div class="max-w-screen-2xl mx-auto px-6 lg:px-12 pb-24">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+
+      <!-- PÁDEL -->
+      <div class="tarifa-card group">
+        <div class="tarifa-card__image">
+          <img src="images/padel.png" alt="Pista de pádel"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+          <div class="tarifa-card__overlay">
+            <span class="text-[10px] font-bold tracking-[0.3em] uppercase">Pádel</span>
+          </div>
+        </div>
+        <div class="tarifa-card__body">
+          <div class="tarifa-card__price">
+            <span class="tarifa-card__amount">50€</span>
+            <span class="tarifa-card__unit">/ pista · 1h 30min</span>
+          </div>
+          <div class="tarifa-card__divider"></div>
+          <ul class="tarifa-card__features">
+            <li>
+              <svg class="w-4 h-4 text-[#0B2118] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              Pista indoor profesional
+            </li>
+            <li>
+              <svg class="w-4 h-4 text-[#0B2118] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              Iluminación LED
+            </li>
+            <li>
+              <svg class="w-4 h-4 text-[#0B2118] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              Vestuarios y duchas
+            </li>
+            <li>
+              <svg class="w-4 h-4 text-[#0B2118] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              Toalla y agua incluidos
+            </li>
+          </ul>
+          <a routerLink="/reservar"
+            class="tarifa-card__cta">
+            Reservar pista
+          </a>
+        </div>
+      </div>
+
+      <!-- FÚTBOL -->
+      <div class="tarifa-card group">
+        <div class="tarifa-card__image">
+          <img src="images/futbol.png" alt="Campo de fútbol indoor"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+          <div class="tarifa-card__overlay">
+            <span class="text-[10px] font-bold tracking-[0.3em] uppercase">Fútbol</span>
+          </div>
+        </div>
+        <div class="tarifa-card__body">
+          <div class="tarifa-card__price">
+            <span class="tarifa-card__amount">100€</span>
+            <span class="tarifa-card__unit">/ campo · 1h 30min</span>
+          </div>
+          <div class="tarifa-card__divider"></div>
+          <ul class="tarifa-card__features">
+            <li>
+              <svg class="w-4 h-4 text-[#0B2118] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              Campo indoor profesional
+            </li>
+            <li>
+              <svg class="w-4 h-4 text-[#0B2118] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              Césped de alta calidad
+            </li>
+            <li>
+              <svg class="w-4 h-4 text-[#0B2118] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              Vestuarios y duchas
+            </li>
+            <li>
+              <svg class="w-4 h-4 text-[#0B2118] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              Balones disponibles
+            </li>
+          </ul>
+          <a routerLink="/reservar"
+            class="tarifa-card__cta">
+            Reservar campo
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- NOTA INFERIOR -->
+  <div class="border-t border-gray-100 bg-[#FAFAFA]">
+    <div class="max-w-screen-2xl mx-auto px-6 lg:px-12 py-16">
+      <div class="max-w-2xl">
+        <h2 class="text-emerald-950 leading-[1.2] mb-4"
+          style="font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 2.5vw, 2rem);">
+          ¿Cómo funciona?
+        </h2>
+        <div class="w-12 h-[2px] bg-[#0B2118] mb-6"></div>
+        <div class="space-y-4 text-[14px] font-light text-gray-500 leading-relaxed">
+          <p>
+            Elige tu deporte, selecciona la fecha y la hora disponible, y confirma tu reserva con el pago seguro a través de Stripe.
+          </p>
+          <p>
+            Recibirás la confirmación al instante. Sin permanencia, sin letra pequeña.
+          </p>
+        </div>
+        <a routerLink="/reservar"
+          class="inline-block mt-8 bg-[#0B2118] text-white px-8 py-4 text-[12px] font-medium tracking-[0.1em] uppercase hover:bg-emerald-900 transition-all duration-300 cursor-pointer">
+          Ir a reservar
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,113 @@
+.tarifas-hero {
+  padding: 9rem 0 3rem;
+  background: #ffffff;
+}
+
+/* ── Card ── */
+.tarifa-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #f3f4f6;
+  background: #ffffff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tarifa-card:hover {
+  border-color: #e5e7eb;
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.06);
+}
+
+/* Image */
+.tarifa-card__image {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.tarifa-card__overlay {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(11, 33, 24, 0.85);
+  color: #ffffff;
+  padding: 0.35rem 0.75rem;
+  backdrop-filter: blur(4px);
+}
+
+/* Body */
+.tarifa-card__body {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Price */
+.tarifa-card__price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.tarifa-card__amount {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: #0B2118;
+  line-height: 1;
+}
+
+.tarifa-card__unit {
+  font-size: 0.8125rem;
+  font-weight: 300;
+  color: #9ca3af;
+}
+
+/* Divider */
+.tarifa-card__divider {
+  width: 2rem;
+  height: 2px;
+  background: #0B2118;
+  margin-bottom: 1.25rem;
+}
+
+/* Features */
+.tarifa-card__features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tarifa-card__features li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 300;
+  color: #6b7280;
+}
+
+/* CTA */
+.tarifa-card__cta {
+  display: block;
+  text-align: center;
+  margin-top: auto;
+  background: #0B2118;
+  color: #ffffff;
+  padding: 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.tarifa-card__cta:hover {
+  background: #134e30;
+}

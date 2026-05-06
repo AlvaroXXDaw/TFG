@@ -165,10 +165,10 @@ export const FACILITIES: Record<string, FacilityData> = {
     heroAccentText: 'de alto nivel.',
     heroDescription: 'Equipamiento de última generación, espacios amplios y diseño pensado para que entrenes al máximo, con el confort que mereces.',
     heroImage: 'images/gimnasio.png',
-    primaryButtonText: 'Reservar sesión',
-    primaryButtonRoute: '/gimnasio',
-    secondaryButtonText: 'Ver tarifas',
-    secondaryButtonRoute: '/tarifas',
+    primaryButtonText: 'Conocer más',
+    primaryButtonRoute: '/instalaciones/gimnasio',
+    secondaryButtonText: 'Hazte socio',
+    secondaryButtonRoute: '/registro',
 
     featureCards: [
       { image: 'images/zona-musculacion.png', title: 'Peso libre', subtitle: 'Zona de fuerza de alto rendimiento' },

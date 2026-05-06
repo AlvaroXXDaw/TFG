@@ -39,10 +39,13 @@ export const routes: Routes = [
         canActivate: [authRequiredGuard],
         loadComponent: () => import('./componentes/perfil/perfil.component').then((m) => m.PerfilComponent),
       },
-
       {
         path: 'instalaciones/:facilityId',
         loadComponent: () => import('./componentes/instalaciones/instalaciones.component').then((m) => m.InstalacionesComponent),
+      },
+      {
+        path: 'tarifas',
+        loadComponent: () => import('./componentes/tarifas/tarifas.component').then((m) => m.TarifasComponent),
       },
     ],
   },
