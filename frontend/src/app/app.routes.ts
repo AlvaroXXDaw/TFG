@@ -20,6 +20,16 @@ export const routes: Routes = [
         loadComponent: () => import('./componentes/reservas/reservas.component').then((m) => m.ReservasComponent),
       },
       {
+        path: 'pago-completado',
+        canActivate: [authRequiredGuard],
+        loadComponent: () => import('./componentes/pago-completado/pago-completado.component').then((m) => m.PagoCompletadoComponent),
+      },
+      {
+        path: 'pago-cancelado',
+        canActivate: [authRequiredGuard],
+        loadComponent: () => import('./componentes/pago-cancelado/pago-cancelado.component').then((m) => m.PagoCanceladoComponent),
+      },
+      {
         path: 'gimnasio',
         canActivate: [authRequiredGuard],
         loadComponent: () => import('./componentes/gimnasio/gimnasio.component').then((m) => m.GimnasioComponent),
