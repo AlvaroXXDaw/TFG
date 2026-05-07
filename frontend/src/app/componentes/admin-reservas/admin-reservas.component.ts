@@ -235,6 +235,7 @@ export class AdminReservasComponent implements OnInit {
 
   statusLabel(status: string) {
     if (status === 'PENDING') return 'Pendiente';
+    if (status === 'CONFIRMED') return 'Confirmada';
     if (status === 'COMPLETED') return 'Completada';
     if (status === 'MAINTENANCE') return 'Mantenimiento';
     return status;
