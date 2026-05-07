@@ -1,5 +1,5 @@
 export type SportType = 'FUTBOL' | 'PADEL';
-export type ReservationStatus = 'MAINTENANCE' | 'PENDING' | 'COMPLETED';
+export type ReservationStatus = 'MAINTENANCE' | 'PENDING' | 'CONFIRMED';
 
 export interface Reservation {
   id: string;
@@ -10,6 +10,7 @@ export interface Reservation {
   date: string;
   time: string;
   status: ReservationStatus;
+  stripeSessionId?: string | null;
 }
 
 export interface CreateReservationRequest {
