@@ -32,11 +32,14 @@ services:
       DB_PASSWORD: ${POSTGRES_PASSWORD:-oasisclub}
       PORT: 8080
       JWT_SECRET: ${JWT_SECRET:-dev_secret_key_change_in_production_123456}
-      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:4300}
-      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:4300}
+      CORS_ORIGINS: ${CORS_ORIGINS:-https://tfg-mocha.vercel.app,http://localhost:4200,http://127.0.0.1:4200,http://localhost:4300,http://127.0.0.1:4300}
+      CORS_ORIGIN_PATTERNS: ${CORS_ORIGIN_PATTERNS:-http://localhost:*,http://127.0.0.1:*,https://*.onrender.com,https://*.vercel.app}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:4200}
       MAIL_USERNAME: ${MAIL_USERNAME}
       MAIL_PASSWORD: ${MAIL_PASSWORD}
       MAIL_OVERRIDE_TO: ${MAIL_OVERRIDE_TO:-}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
     ports:
       - "8080:8080"
 
