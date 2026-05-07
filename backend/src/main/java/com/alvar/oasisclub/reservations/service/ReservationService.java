@@ -81,6 +81,22 @@ public class ReservationService {
 
   @Transactional
   public ReservationResponse createReservation(CreateReservationRequest request) {
+    ReservationEntity saved = createReservationEntity(request, ReservationStatus.PENDING);
+    return reservationMapper.toResponse(saved);
+  }
+
+  @Transactional
+  public ReservationResponse createConfirmedReservation(CreateReservationRequest request) {
+    ReservationEntity saved = createReservationEntity(request, ReservationStatus.CONFIRMED);
+    return reservationMapper.toResponse(saved);
+  }
+
+  @Transactional
+  public ReservationEntity createPendingReservationForPayment(CreateReservationRequest request) {
+    return createReservationEntity(request, ReservationStatus.PENDING);
+  }
+
+  private ReservationEntity createReservationEntity(CreateReservationRequest request, ReservationStatus status) {
     com.alvar.oasisclub.courts.entity.CourtEntity court = requireActiveCourt(request.getCourtId());
     if (court.getSport() != request.getSport()) {
       throw new IllegalArgumentException("Court sport does not match reservation sport");
@@ -89,8 +105,9 @@ public class ReservationService {
     ensureSlotAvailable(court.getId(), request.getDate(), request.getTime());
 
     try {
-      ReservationEntity saved = reservationRepository.save(reservationMapper.fromCreateRequest(request, court));
-      return reservationMapper.toResponse(saved);
+      ReservationEntity reservation = reservationMapper.fromCreateRequest(request, court);
+      reservation.setStatus(status);
+      return reservationRepository.saveAndFlush(reservation);
     } catch (DataIntegrityViolationException ex) {
       throw new IllegalArgumentException("Selected slot is not available");
     }
@@ -99,7 +116,7 @@ public class ReservationService {
   @Transactional(readOnly = true)
   public long countActiveClientReservationsByDay(UUID clientId, LocalDate date) {
     return reservationRepository.findByClientIdAndReservationDateOrderByReservationTimeAsc(clientId, date).stream()
-        .filter(reservation -> reservation.getStatus() == ReservationStatus.PENDING)
+        .filter(this::blocksAvailability)
         .count();
   }
 
@@ -128,6 +145,35 @@ public class ReservationService {
     reservationRepository.deleteById(id);
   }
 
+  @Transactional
+  public void saveStripeSessionId(UUID reservationId, String stripeSessionId) {
+    ReservationEntity reservation = getEntityById(reservationId);
+    reservation.setStripeSessionId(stripeSessionId);
+  }
+
+  @Transactional
+  public void confirmByStripeSessionId(String stripeSessionId) {
+    reservationRepository.findByStripeSessionId(stripeSessionId)
+        .ifPresent(reservation -> {
+          if (reservation.getStatus() == ReservationStatus.PENDING) {
+            reservation.setStatus(ReservationStatus.CONFIRMED);
+          }
+        });
+  }
+
+  @Transactional
+  public void releasePendingStripeReservation(String stripeSessionId) {
+    reservationRepository.findByStripeSessionId(stripeSessionId)
+        .filter(reservation -> reservation.getStatus() == ReservationStatus.PENDING)
+        .ifPresent(reservationRepository::delete);
+  }
+
+  @Transactional(readOnly = true)
+  public ReservationEntity getByStripeSessionIdAndClientId(String stripeSessionId, UUID clientId) {
+    return reservationRepository.findByStripeSessionIdAndClientId(stripeSessionId, clientId)
+        .orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
+  }
+
   @Transactional(readOnly = true)
   public List<AvailabilitySlotResponse> getAvailability(UUID courtId, LocalDate date) {
     List<String> times = scheduleSlotService.getAllSlots();
@@ -135,7 +181,7 @@ public class ReservationService {
         .findByCourt_IdAndReservationDateOrderByReservationTimeAsc(courtId, date);
 
     List<String> reservedTimes = dayReservations.stream()
-        .filter(r -> r.getStatus() != ReservationStatus.COMPLETED)
+        .filter(this::blocksAvailability)
         .map(r -> r.getReservationTime().toString().substring(0, 5))
         .toList();
 
@@ -159,6 +205,12 @@ public class ReservationService {
     if (reservationRepository.existsByCourt_IdAndReservationDateAndReservationTime(courtId, date, time)) {
       throw new IllegalArgumentException("Selected slot is not available");
     }
+  }
+
+  private boolean blocksAvailability(ReservationEntity reservation) {
+    return reservation.getStatus() == ReservationStatus.PENDING
+        || reservation.getStatus() == ReservationStatus.CONFIRMED
+        || reservation.getStatus() == ReservationStatus.MAINTENANCE;
   }
 }
 

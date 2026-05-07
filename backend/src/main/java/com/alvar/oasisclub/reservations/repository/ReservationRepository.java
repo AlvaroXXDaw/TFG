@@ -6,6 +6,7 @@ import com.alvar.oasisclub.reservations.entity.SportType;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -30,6 +31,10 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
   List<ReservationEntity> findByClientIdOrderByReservationDateDescReservationTimeDesc(UUID clientId);
 
   List<ReservationEntity> findByClientIdAndReservationDateOrderByReservationTimeAsc(UUID clientId, LocalDate date);
+
+  Optional<ReservationEntity> findByStripeSessionId(String stripeSessionId);
+
+  Optional<ReservationEntity> findByStripeSessionIdAndClientId(String stripeSessionId, UUID clientId);
 
   boolean existsByCourt_IdAndReservationDateAndReservationTime(UUID courtId, LocalDate date, LocalTime time);
 }

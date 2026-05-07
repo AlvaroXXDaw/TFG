@@ -42,7 +42,11 @@ app:
     secret: ${JWT_SECRET}
     expiration-ms: 86400000
   cors:
-    allowed-origins: ${CORS_ORIGINS:https://tfg-mocha.vercel.app}
+    allowed-origins: ${CORS_ORIGINS:https://tfg-mocha.vercel.app,http://localhost:4200,http://127.0.0.1:4200,http://localhost:4300,http://127.0.0.1:4300}
+    allowed-origin-patterns: ${CORS_ORIGIN_PATTERNS:http://localhost:*,http://127.0.0.1:*,https://*.onrender.com,https://*.vercel.app}
   frontend-url: ${FRONTEND_URL:https://tfg-mocha.vercel.app}
   mail:
     override-to: ${MAIL_OVERRIDE_TO:}
+  stripe:
+    secret-key: ${STRIPE_SECRET_KEY:}
+    webhook-secret: ${STRIPE_WEBHOOK_SECRET:}

@@ -17,6 +17,7 @@ import com.alvar.oasisclub.reservations.entity.SportType;
 import com.alvar.oasisclub.reservations.mapper.ReservationMapper;
 import com.alvar.oasisclub.reservations.repository.ReservationRepository;
 import com.alvar.oasisclub.reservations.service.ReservationService;
+import com.alvar.oasisclub.schedule.service.ScheduleSlotService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -40,6 +41,9 @@ class ReservationServiceTest {
 
   @Mock
   private CourtRepository courtRepository;
+
+  @Mock
+  private ScheduleSlotService scheduleSlotService;
 
   @InjectMocks
   private ReservationService reservationService;
@@ -82,7 +86,7 @@ class ReservationServiceTest {
 
     when(courtRepository.findById(courtId)).thenReturn(Optional.of(court));
     when(reservationMapper.fromCreateRequest(request, court)).thenReturn(entity);
-    when(reservationRepository.save(entity)).thenReturn(entity);
+    when(reservationRepository.saveAndFlush(entity)).thenReturn(entity);
     when(reservationMapper.toResponse(entity)).thenReturn(response);
 
     ReservationResponse result = reservationService.createReservation(request);
@@ -125,16 +129,55 @@ class ReservationServiceTest {
         .createdAt(LocalDateTime.now())
         .build();
 
+    ReservationEntity confirmed = ReservationEntity.builder()
+        .id(UUID.randomUUID())
+        .sport(SportType.PADEL)
+        .court(court)
+        .reservationDate(date)
+        .reservationTime(LocalTime.of(19, 30))
+        .status(ReservationStatus.CONFIRMED)
+        .createdAt(LocalDateTime.now())
+        .build();
+
+    when(scheduleSlotService.getAllSlots()).thenReturn(List.of(
+        "09:00",
+        "10:30",
+        "12:00",
+        "13:30",
+        "15:00",
+        "16:30",
+        "18:00",
+        "19:30",
+        "21:00"
+    ));
     when(reservationRepository.findByCourt_IdAndReservationDateOrderByReservationTimeAsc(courtId, date))
-        .thenReturn(List.of(occupied));
+        .thenReturn(List.of(occupied, confirmed));
 
     List<AvailabilitySlotResponse> slots = reservationService.getAvailability(courtId, date);
 
     assertEquals(9, slots.size());
     AvailabilitySlotResponse slot18 = slots.stream().filter(s -> s.getTime().equals("18:00")).findFirst().orElseThrow();
+    AvailabilitySlotResponse slot1930 = slots.stream().filter(s -> s.getTime().equals("19:30")).findFirst().orElseThrow();
     AvailabilitySlotResponse slot09 = slots.stream().filter(s -> s.getTime().equals("09:00")).findFirst().orElseThrow();
     assertFalse(slot18.isAvailable());
+    assertFalse(slot1930.isAvailable());
     assertTrue(slot09.isAvailable());
+  }
+
+  @Test
+  void confirmByStripeSessionIsIdempotent() {
+    ReservationEntity confirmed = ReservationEntity.builder()
+        .id(UUID.randomUUID())
+        .stripeSessionId("cs_test_123")
+        .status(ReservationStatus.CONFIRMED)
+        .createdAt(LocalDateTime.now())
+        .build();
+
+    when(reservationRepository.findByStripeSessionId("cs_test_123")).thenReturn(Optional.of(confirmed));
+
+    reservationService.confirmByStripeSessionId("cs_test_123");
+
+    assertEquals(ReservationStatus.CONFIRMED, confirmed.getStatus());
   }
 }
 

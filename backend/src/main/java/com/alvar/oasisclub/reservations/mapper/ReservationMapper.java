@@ -23,6 +23,7 @@ public class ReservationMapper {
     dto.setDate(entity.getReservationDate());
     dto.setTime(entity.getReservationTime());
     dto.setStatus(entity.getStatus().name());
+    dto.setStripeSessionId(entity.getStripeSessionId());
     return dto;
   }
 

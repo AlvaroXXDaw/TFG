@@ -47,7 +47,7 @@ public class ScheduleSlotService {
         .anyMatch(r ->
             r.getReservationTime().equals(parsed)
             && r.getReservationDate().isAfter(LocalDate.now().minusDays(1))
-            && r.getStatus() == ReservationStatus.PENDING
+            && blocksAvailability(r.getStatus())
         );
 
     if (hasFutureReservations) {
@@ -57,5 +57,11 @@ public class ScheduleSlotService {
     }
 
     scheduleSlotRepository.deleteBySlotTime(parsed);
+  }
+
+  private boolean blocksAvailability(ReservationStatus status) {
+    return status == ReservationStatus.PENDING
+        || status == ReservationStatus.CONFIRMED
+        || status == ReservationStatus.MAINTENANCE;
   }
 }

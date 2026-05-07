@@ -59,6 +59,9 @@ public class ReservationEntity {
   @Column(nullable = false, length = 30)
   private ReservationStatus status;
 
+  @Column(name = "stripe_session_id", length = 255, unique = true)
+  private String stripeSessionId;
+
   @Column(name = "created_at", nullable = false)
   private LocalDateTime createdAt;
 }

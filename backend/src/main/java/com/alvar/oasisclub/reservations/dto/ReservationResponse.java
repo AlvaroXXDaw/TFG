@@ -14,6 +14,7 @@ public class ReservationResponse {
   private LocalDate date;
   private LocalTime time;
   private String status;
+  private String stripeSessionId;
 }
 
 

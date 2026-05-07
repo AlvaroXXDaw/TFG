@@ -57,25 +57,27 @@ public class ReservationController {
       @Valid @RequestBody CreateReservationRequest request,
       Authentication authentication
   ) {
-    AuthenticatedUser user = accessControl.requireUser(authentication);
+    accessControl.requireUser(authentication);
     boolean isAdmin = accessControl.isAdmin(authentication);
 
-    UUID effectiveClientId;
-    if (isAdmin) {
-      if (request.getClientId() == null || request.getClientId().isBlank()) {
-        throw new IllegalArgumentException("clientId is required for admin reservation creation");
-      }
-      effectiveClientId = UUID.fromString(request.getClientId());
-    } else {
-      effectiveClientId = user.clientId();
+    if (!isAdmin) {
+      throw new org.springframework.security.access.AccessDeniedException(
+          "Users must pay reservations through checkout"
+      );
     }
+
+    UUID effectiveClientId;
+    if (request.getClientId() == null || request.getClientId().isBlank()) {
+      throw new IllegalArgumentException("clientId is required for admin reservation creation");
+    }
+    effectiveClientId = UUID.fromString(request.getClientId());
 
     ClientEntity targetClient = clientService.getEntityById(effectiveClientId);
 
     request.setClientId(targetClient.getId().toString());
     request.setUserName(targetClient.getName());
 
-    return ResponseEntity.ok(reservationService.createReservation(request));
+    return ResponseEntity.ok(reservationService.createConfirmedReservation(request));
   }
 
   @PostMapping("/reservations/maintenance")

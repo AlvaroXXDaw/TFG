@@ -139,6 +139,23 @@ public class GlobalExceptionHandler {
     return ResponseEntity.badRequest().body(body);
   }
 
+  @ExceptionHandler(IllegalStateException.class)
+  public ResponseEntity<ApiErrorResponse> handleIllegalState(
+      IllegalStateException ex,
+      HttpServletRequest request
+  ) {
+    ApiErrorResponse body = ApiErrorResponse.builder()
+        .timestamp(LocalDateTime.now())
+        .status(HttpStatus.BAD_GATEWAY.value())
+        .error(HttpStatus.BAD_GATEWAY.getReasonPhrase())
+        .message(ex.getMessage())
+        .path(request.getRequestURI())
+        .details(List.of())
+        .build();
+
+    return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(body);
+  }
+
   @ExceptionHandler(AccessDeniedException.class)
   public ResponseEntity<ApiErrorResponse> handleAccessDenied(
       AccessDeniedException ex,

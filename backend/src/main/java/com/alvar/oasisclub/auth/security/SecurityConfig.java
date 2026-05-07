@@ -3,6 +3,7 @@ package com.alvar.oasisclub.auth.security;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -28,6 +29,7 @@ public class SecurityConfig {
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/api/v1/auth/**").permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/v1/payments/webhook").permitAll()
             .requestMatchers("/swagger-ui/**").permitAll()
             .requestMatchers("/swagger-ui.html").permitAll()
             .requestMatchers("/v3/api-docs/**").permitAll()
