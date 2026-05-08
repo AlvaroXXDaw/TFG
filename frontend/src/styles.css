@@ -6,8 +6,7 @@
 }
 
 html, body {
-  touch-action: manipulation; /* Permite scroll y pellizco, bloquea doble-toque */
-}
+  touch-action: manipulation;}
 
 body {
   font-family: "Inter", sans-serif;

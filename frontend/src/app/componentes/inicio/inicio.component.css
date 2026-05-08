@@ -50,12 +50,7 @@
   .home-hero__content {
     padding: 0 3rem 0 clamp(4rem, 6vw, 7rem);
   }
-}
-
-/* The wrapper needs enough height for the sticky element to stay pinned
-   while the user scrolls. 300vh gives plenty of vertical scroll runway
-   for all 10 photos to be revealed horizontally. */
-.horizontal-scroll-wrapper {
+}.horizontal-scroll-wrapper {
   height: 300vh;
 }
 

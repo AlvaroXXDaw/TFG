@@ -1,10 +1,4 @@
-<div class="min-h-screen bg-white flex w-full overflow-hidden">
-  
-  <!-- LADO IZQUIERDO: FORMULARIO -->
-  <div class="w-full lg:w-[45%] xl:w-[40%] min-h-screen flex flex-col justify-between p-8 lg:p-12 xl:p-16 relative z-10 bg-white">
-    
-    <!-- Top: Logo & Back -->
-    <div>
+<div class="min-h-screen bg-white flex w-full overflow-hidden"><div class="w-full lg:w-[45%] xl:w-[40%] min-h-screen flex flex-col justify-between p-8 lg:p-12 xl:p-16 relative z-10 bg-white"><div>
       <a routerLink="/" class="inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.15em] uppercase text-gray-400 hover:text-emerald-950 transition-colors mb-10">
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
         Inicio
@@ -12,19 +6,14 @@
       <a routerLink="/" class="text-2xl tracking-tighter text-emerald-950 block">
         OASIS<span class="font-bold">CLUB</span>
       </a>
-    </div>
-
-    <!-- Middle: Formulario -->
-    <div class="w-full max-w-sm mx-auto my-auto py-12">
+    </div><div class="w-full max-w-sm mx-auto my-auto py-12">
       <p class="text-[10px] font-bold tracking-[0.3em] uppercase text-gray-400 mb-6">BIENVENIDO DE NUEVO</p>
       <h1 class="leading-[1.1] font-normal text-gray-900 mb-12" style="font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 4vw, 3rem);">
         Inicia sesión en tu<br>
         <span class="italic text-[#0B2118]">cuenta.</span>
       </h1>
 
-      <form class="space-y-8" #loginForm="ngForm" (ngSubmit)="submitLogin(loginForm)">
-        <!-- Campo: Email -->
-        <div class="relative">
+      <form class="space-y-8" #loginForm="ngForm" (ngSubmit)="submitLogin(loginForm)"><div class="relative">
           <input
             [(ngModel)]="email"
             #emailModel="ngModel"
@@ -48,10 +37,7 @@
               <p class="mt-2 text-[11px] text-red-500 font-light">Introduce un correo válido.</p>
             }
           }
-        </div>
-
-        <!-- Campo: Contraseña -->
-        <div class="relative">
+        </div><div class="relative">
           <input
             [(ngModel)]="password"
             #passwordModel="ngModel"
@@ -88,22 +74,13 @@
               <p class="mt-2 text-[11px] text-red-500 font-light">Debe tener al menos {{ minPasswordLength }} caracteres.</p>
             }
           }
-        </div>
-
-        <!-- Opciones: Olvidaste contraseña -->
-        <div class="flex justify-end pt-2">
+        </div><div class="flex justify-end pt-2">
           <a routerLink="/recuperar-clave" class="text-[13px] font-light text-emerald-950 hover:underline decoration-emerald-950/30 underline-offset-4 transition-all">¿No te acuerdas de tu contraseña?</a>
-        </div>
-
-        <!-- Mensaje de Error Global -->
-        @if (errorMessage()) {
+        </div>@if (errorMessage()) {
           <div class="flex items-center gap-2 text-[13px] text-red-500 pt-2 bg-red-50/50 p-3 border-l-2 border-red-500">
             <span class="font-light">{{ errorMessage() }}</span>
           </div>
-        }
-
-        <!-- Botón Entrar -->
-        <button [disabled]="loading() || loginForm.invalid" type="submit" class="w-full bg-[#0B2118] text-white py-4 text-[11px] font-medium tracking-[0.15em] uppercase hover:bg-emerald-900 transition-colors mt-8 disabled:opacity-60 disabled:cursor-not-allowed">
+        }<button [disabled]="loading() || loginForm.invalid" type="submit" class="w-full bg-[#0B2118] text-white py-4 text-[11px] font-medium tracking-[0.15em] uppercase hover:bg-emerald-900 transition-colors mt-8 disabled:opacity-60 disabled:cursor-not-allowed">
           @if (loading()) {
             Iniciando sesión...
           } @else {
@@ -111,20 +88,14 @@
           }
         </button>
       </form>
-    </div>
-
-    <!-- Bottom: Crear cuenta -->
-    <div class="text-[13px] font-light text-gray-500">
+    </div><div class="text-[13px] font-light text-gray-500">
       ¿No tienes cuenta? 
       <a routerLink="/registro" class="font-medium text-[#0B2118] hover:underline decoration-[#0B2118]/30 underline-offset-4 transition-all ml-1">
         Hazte socio
       </a>
     </div>
 
-  </div>
-
-  <!-- LADO DERECHO: IMAGEN (Solo Desktop) -->
-  <div class="hidden lg:block lg:w-[55%] xl:w-[60%] h-screen relative bg-[#FAFAFA]">
+  </div><div class="hidden lg:block lg:w-[55%] xl:w-[60%] h-screen relative bg-[#FAFAFA]">
     <div class="absolute inset-0 z-0">
       <img src="images/club-hero.png" alt="Oasis Club Premium" class="w-full h-full object-cover object-center grayscale-[20%]" 
         referrerpolicy="no-referrer">

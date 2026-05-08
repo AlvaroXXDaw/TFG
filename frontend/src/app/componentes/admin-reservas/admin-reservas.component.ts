@@ -27,7 +27,6 @@ export class AdminReservasComponent implements OnInit {
   filterCourts = signal<CourtResponse[]>([]);
   courtsForBlock = signal<CourtResponse[]>([]);
 
-  // Schedule slots (dinámicos desde BD)
   scheduleSlots = signal<string[]>([]);
   newSlotTime = '';
   scheduleError = signal('');
@@ -48,7 +47,6 @@ export class AdminReservasComponent implements OnInit {
     this.loadBlockCourts();
   }
 
-  // ─── SCHEDULE SLOTS ─────────────────────────
   private loadScheduleSlots() {
     this.scheduleApi.getSlots().subscribe({
       next: (slots) => {
@@ -73,14 +71,14 @@ export class AdminReservasComponent implements OnInit {
 
     this.scheduleApi.addSlot(this.newSlotTime).subscribe({
       next: () => {
-        this.scheduleSuccess.set(`Horario ${this.newSlotTime} añadido`);
+        this.scheduleSuccess.set(`Horario ${this.newSlotTime} aÃ±adido`);
         this.newSlotTime = '';
         this.loadScheduleSlots();
         this.loadReservations();
       },
       error: (err) => {
-        const msg = err?.error?.message || err?.error || 'Error al añadir horario';
-        this.scheduleError.set(typeof msg === 'string' ? msg : 'Error al añadir horario');
+        const msg = err?.error?.message || err?.error || 'Error al aÃ±adir horario';
+        this.scheduleError.set(typeof msg === 'string' ? msg : 'Error al aÃ±adir horario');
       },
     });
   }
@@ -102,7 +100,6 @@ export class AdminReservasComponent implements OnInit {
     });
   }
 
-  // ─── RESERVATIONS ───────────────────────────
   private loadReservations() {
     this.loading.set(true);
     const filters: { sport?: SportType; date?: string } = {
