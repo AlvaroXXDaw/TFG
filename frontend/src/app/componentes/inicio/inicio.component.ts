@@ -18,16 +18,16 @@ export class InicioComponent implements AfterViewInit {
   scrollX = 0;
 
   galleryPhotos = [
-    { src: 'images/gallery-01.png', label: 'Pista Indoor' },
-    { src: 'images/gallery-02.png', label: 'Terraza' },
-    { src: 'images/gallery-03.png', label: 'Zona Spa' },
-    { src: 'images/gallery-04.png', label: 'Recepción' },
-    { src: 'images/gallery-05.png', label: 'Fútbol Nocturno' },
-    { src: 'images/gallery-06.png', label: 'Vestuarios' },
-    { src: 'images/gallery-07.png', label: 'Sala Yoga' },
-    { src: 'images/gallery-08.png', label: 'Fachada' },
-    { src: 'images/gallery-09.png', label: 'Cafetería' },
-    { src: 'images/gallery-10.png', label: 'Vista Aérea' },
+    { src: 'images/sport-padel-ultrareal.png', label: 'Pista Indoor' },
+    { src: 'images/facility-padel-training-ultrareal.png', label: 'Entrenamiento Padel' },
+    { src: 'images/sport-futbol-ultrareal.png', label: 'Futbol Indoor' },
+    { src: 'images/facility-futbol-training-ultrareal.png', label: 'Tecnificacion' },
+    { src: 'images/sport-gimnasio-ultrareal.png', label: 'Sala Fitness' },
+    { src: 'images/facility-strength-ultrareal.png', label: 'Zona Fuerza' },
+    { src: 'images/facility-cardio-ultrareal.png', label: 'Cardio Premium' },
+    { src: 'images/facility-equipment-ultrareal.png', label: 'Equipamiento' },
+    { src: 'images/facility-lounge-ultrareal.png', label: 'Cafeteria' },
+    { src: 'images/facility-lockers-ultrareal.png', label: 'Vestuarios' },
   ];
 
   galleryPairs = this.chunkArray(this.galleryPhotos, 2);
