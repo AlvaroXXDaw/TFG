@@ -47,16 +47,16 @@ export const FACILITIES: Record<string, FacilityData> = {
     heroTitle: 'Fútbol',
     heroAccentText: 'de alto nivel.',
     heroDescription: 'Instalaciones profesionales, entrenamientos de calidad y un entorno diseñado para competir, mejorar y disfrutar del juego.',
-    heroImage: 'images/futbol.png',
+    heroImage: 'images/sport-futbol-ultrareal.png',
     primaryButtonText: 'Reservar pista',
     primaryButtonRoute: '/reservar',
     secondaryButtonText: 'Ver tarifas',
     secondaryButtonRoute: '/tarifas',
 
     featureCards: [
-      { image: 'images/futbol.png', title: 'Campo indoor', subtitle: 'Césped de calidad profesional' },
-      { image: 'images/detalle-futbol.png', title: 'Entrenamiento técnico', subtitle: 'Sesiones guiadas para perfeccionar' },
-      { image: 'images/detalle-gimnasio.png', title: 'Equipamiento top', subtitle: 'Balones y material siempre disponibles' }
+      { image: 'images/sport-futbol-ultrareal.png', title: 'Campo indoor', subtitle: 'Césped de calidad profesional' },
+      { image: 'images/facility-futbol-training-ultrareal.png', title: 'Entrenamiento técnico', subtitle: 'Sesiones guiadas para perfeccionar' },
+      { image: 'images/facility-equipment-ultrareal.png', title: 'Equipamiento top', subtitle: 'Balones y material siempre disponibles' }
     ],
 
     experienceTitle: 'Mucho más que fútbol.',
@@ -99,23 +99,23 @@ export const FACILITIES: Record<string, FacilityData> = {
     bottomPrimaryButtonRoute: '/reservar',
     bottomSecondaryButtonText: 'Hazte socio',
     bottomSecondaryButtonRoute: '/registro',
-    bottomImage: 'images/pista-principal.png'
+    bottomImage: 'images/sport-futbol-ultrareal.png'
   },
   padel: {
     sportLabel: 'PÁDEL',
     heroTitle: 'Pádel',
     heroAccentText: 'de alto nivel.',
     heroDescription: 'Instalaciones profesionales, tecnología de última generación y un entorno diseñado para que lleves tu juego al siguiente nivel.',
-    heroImage: 'images/padel.png',
+    heroImage: 'images/sport-padel-ultrareal.png',
     primaryButtonText: 'Reservar pista',
     primaryButtonRoute: '/reservar',
     secondaryButtonText: 'Ver tarifas',
     secondaryButtonRoute: '/tarifas',
 
     featureCards: [
-      { image: 'images/padel.png', title: 'Instalaciones premium', subtitle: 'Pistas indoor con iluminación LED' },
-      { image: 'images/detalle-padel.png', title: 'Entrenamiento de élite', subtitle: 'Programas diseñados para todos' },
-      { image: 'images/detalle-gimnasio.png', title: 'Equipamiento top', subtitle: 'Material de las mejores marcas' }
+      { image: 'images/sport-padel-ultrareal.png', title: 'Instalaciones premium', subtitle: 'Pistas indoor con iluminación LED' },
+      { image: 'images/facility-padel-training-ultrareal.png', title: 'Entrenamiento de élite', subtitle: 'Programas diseñados para todos' },
+      { image: 'images/facility-equipment-ultrareal.png', title: 'Equipamiento top', subtitle: 'Material de las mejores marcas' }
     ],
 
     experienceTitle: 'Mucho más que pádel.',
@@ -157,23 +157,23 @@ export const FACILITIES: Record<string, FacilityData> = {
     bottomPrimaryButtonRoute: '/reservar',
     bottomSecondaryButtonText: 'Hazte socio',
     bottomSecondaryButtonRoute: '/registro',
-    bottomImage: 'images/cafeteria-social.png'
+    bottomImage: 'images/facility-lounge-ultrareal.png'
   },
   gimnasio: {
     sportLabel: 'SALA DE MÁQUINAS',
     heroTitle: 'Sala de máquinas',
     heroAccentText: 'de alto nivel.',
     heroDescription: 'Equipamiento de última generación, espacios amplios y diseño pensado para que entrenes al máximo, con el confort que mereces.',
-    heroImage: 'images/gimnasio.png',
+    heroImage: 'images/sport-gimnasio-ultrareal.png',
     primaryButtonText: 'Conocer más',
     primaryButtonRoute: '/instalaciones/gimnasio',
     secondaryButtonText: 'Hazte socio',
     secondaryButtonRoute: '/registro',
 
     featureCards: [
-      { image: 'images/zona-musculacion.png', title: 'Peso libre', subtitle: 'Zona de fuerza de alto rendimiento' },
-      { image: 'images/gimnasio.png', title: 'Máquinas guiadas', subtitle: 'Equipamiento de última generación' },
-      { image: 'images/pista-principal.png', title: 'Cardio premium', subtitle: 'Cintas y bicis con conectividad' }
+      { image: 'images/facility-strength-ultrareal.png', title: 'Peso libre', subtitle: 'Zona de fuerza de alto rendimiento' },
+      { image: 'images/sport-gimnasio-ultrareal.png', title: 'Máquinas guiadas', subtitle: 'Equipamiento de última generación' },
+      { image: 'images/facility-cardio-ultrareal.png', title: 'Cardio premium', subtitle: 'Cintas y bicis con conectividad' }
     ],
 
     experienceTitle: 'Mucho más que entrenar.',
@@ -215,6 +215,6 @@ export const FACILITIES: Record<string, FacilityData> = {
     bottomPrimaryButtonRoute: '/gimnasio',
     bottomSecondaryButtonText: 'Hazte socio',
     bottomSecondaryButtonRoute: '/registro',
-    bottomImage: 'images/vestuarios.png'
+    bottomImage: 'images/facility-lockers-ultrareal.png'
   }
 };
