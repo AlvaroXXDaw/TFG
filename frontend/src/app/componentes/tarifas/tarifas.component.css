@@ -1,18 +1,16 @@
 .tarifas-hero {
   padding: 9rem 0 3rem;
   background: #ffffff;
-}.tarifa-card {
+}
+
+.tarifa-card {
   display: flex;
   flex-direction: column;
   border: 1px solid #f3f4f6;
   background: #ffffff;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.tarifa-card:hover {
-  border-color: #e5e7eb;
-  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.06);
-}.tarifa-card__image {
+.tarifa-card__image {
   position: relative;
   aspect-ratio: 16 / 9;
   overflow: hidden;
@@ -26,12 +24,16 @@
   color: #ffffff;
   padding: 0.35rem 0.75rem;
   backdrop-filter: blur(4px);
-}.tarifa-card__body {
+}
+
+.tarifa-card__body {
   padding: 2rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-}.tarifa-card__price {
+}
+
+.tarifa-card__price {
   display: flex;
   align-items: baseline;
   gap: 0.5rem;
@@ -50,12 +52,16 @@
   font-size: 0.8125rem;
   font-weight: 300;
   color: #9ca3af;
-}.tarifa-card__divider {
+}
+
+.tarifa-card__divider {
   width: 2rem;
   height: 2px;
   background: #0B2118;
   margin-bottom: 1.25rem;
-}.tarifa-card__features {
+}
+
+.tarifa-card__features {
   list-style: none;
   padding: 0;
   margin: 0 0 1.5rem;
@@ -71,7 +77,9 @@
   font-size: 0.8125rem;
   font-weight: 300;
   color: #6b7280;
-}.tarifa-card__cta {
+}
+
+.tarifa-card__cta {
   display: block;
   text-align: center;
   margin-top: auto;

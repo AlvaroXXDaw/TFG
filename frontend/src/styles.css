@@ -6,7 +6,8 @@
 }
 
 html, body {
-  touch-action: manipulation;}
+  touch-action: manipulation; 
+}
 
 body {
   font-family: "Inter", sans-serif;
