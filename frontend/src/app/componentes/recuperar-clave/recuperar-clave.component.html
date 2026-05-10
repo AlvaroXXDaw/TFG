@@ -1,4 +1,8 @@
-<div class="min-h-screen bg-white flex w-full overflow-hidden"><div class="w-full lg:w-[45%] xl:w-[40%] min-h-screen flex flex-col justify-between p-8 lg:p-12 xl:p-16 relative z-10 bg-white"><div>
+<div class="min-h-screen bg-white flex w-full overflow-hidden">
+  
+  <div class="w-full lg:w-[45%] xl:w-[40%] min-h-screen flex flex-col justify-between p-8 lg:p-12 xl:p-16 relative z-10 bg-white">
+    
+    <div>
       <a routerLink="/login" class="inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.15em] uppercase text-gray-400 hover:text-emerald-950 transition-colors mb-10">
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
         Volver al login
@@ -6,7 +10,9 @@
       <a routerLink="/" class="text-2xl tracking-tighter text-emerald-950 block">
         OASIS<span class="font-bold">CLUB</span>
       </a>
-    </div><div class="w-full max-w-sm mx-auto my-auto py-12">
+    </div>
+
+    <div class="w-full max-w-sm mx-auto my-auto py-12">
       @if (!sent()) {
         <p class="text-[10px] font-bold tracking-[0.3em] uppercase text-gray-400 mb-6">RESTABLECER CONTRASEÑA</p>
         <h1 class="leading-[1.1] font-normal text-gray-900 mb-12" style="font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 4vw, 3rem);">
@@ -17,7 +23,8 @@
           Introduce tu correo y te enviaremos un enlace para crear una nueva contraseña.
         </p>
 
-        <form class="space-y-8" #forgotForm="ngForm" (ngSubmit)="submitForgotPassword(forgotForm)"><div class="relative">
+        <form class="space-y-8" #forgotForm="ngForm" (ngSubmit)="submitForgotPassword(forgotForm)">
+          <div class="relative">
             <input
               [(ngModel)]="email"
               #emailModel="ngModel"
@@ -41,11 +48,15 @@
                 <p class="mt-2 text-[11px] text-red-500 font-light">Introduce un correo válido.</p>
               }
             }
-          </div>@if (errorMessage()) {
+          </div>
+
+          @if (errorMessage()) {
             <div class="flex items-center gap-2 text-[13px] text-red-500 pt-2 bg-red-50/50 p-3 border-l-2 border-red-500">
               <span class="font-light">{{ errorMessage() }}</span>
             </div>
-          }<button [disabled]="loading() || forgotForm.invalid" type="submit" class="w-full bg-[#0B2118] text-white py-4 text-[11px] font-medium tracking-[0.15em] uppercase hover:bg-emerald-900 transition-colors mt-8 disabled:opacity-60 disabled:cursor-not-allowed">
+          }
+
+          <button [disabled]="loading() || forgotForm.invalid" type="submit" class="w-full bg-[#0B2118] text-white py-4 text-[11px] font-medium tracking-[0.15em] uppercase hover:bg-emerald-900 transition-colors mt-8 disabled:opacity-60 disabled:cursor-not-allowed">
             @if (loading()) {
               Enviando...
             } @else {
@@ -53,7 +64,8 @@
             }
           </button>
         </form>
-      } @else {<div class="text-left">
+      } @else {
+        <div class="text-left">
           <div class="w-16 h-16 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center mb-8">
             <svg class="w-6 h-6 text-emerald-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
           </div>
@@ -69,13 +81,17 @@
           </a>
         </div>
       }
-    </div><div class="text-[13px] font-light text-gray-500 opacity-0 pointer-events-none">
+    </div>
+
+    <div class="text-[13px] font-light text-gray-500 opacity-0 pointer-events-none">
       Spacer
     </div>
 
-  </div><div class="hidden lg:block lg:w-[55%] xl:w-[60%] h-screen relative bg-[#FAFAFA]">
+  </div>
+
+  <div class="hidden lg:block lg:w-[55%] xl:w-[60%] h-screen relative bg-[#FAFAFA]">
     <div class="absolute inset-0 z-0">
-      <img src="images/club-hero.png" alt="Oasis Club Premium" class="w-full h-full object-cover object-center grayscale-[20%]" 
+      <img src="images/auth-hero-ultrareal.png" alt="Recepción premium de Oasis Club" class="w-full h-full object-cover object-center grayscale-[20%]" 
         style="mask-image: linear-gradient(to right, transparent 0%, white 15%, white 100%); -webkit-mask-image: linear-gradient(to right, transparent 0%, white 15%, white 100%);" referrerpolicy="no-referrer">
     </div>
   </div>
