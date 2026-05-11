@@ -2,7 +2,11 @@ package com.alvar.oasisclub.common.email;
 
 import com.alvar.oasisclub.common.config.MailSenderProperties;
 import jakarta.mail.internet.MimeMessage;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Year;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +20,10 @@ import org.springframework.stereotype.Service;
 public class EmailService {
 
   private static final Logger log = LoggerFactory.getLogger(EmailService.class);
+  private static final DateTimeFormatter RESERVATION_DATE_FORMATTER =
+      DateTimeFormatter.ofPattern("EEEE, d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+  private static final DateTimeFormatter RESERVATION_TIME_FORMATTER =
+      DateTimeFormatter.ofPattern("HH:mm");
 
   private final JavaMailSender mailSender;
   private final MailSenderProperties mailSenderProperties;
@@ -34,6 +42,36 @@ public class EmailService {
     String plainText = buildWelcomeEmailText(userName);
     String htmlText = buildWelcomeEmailHtml(userName);
     sendEmail(toEmail, subject, plainText, htmlText, "welcome");
+  }
+
+  @Async
+  public void sendReservationConfirmedEmail(
+      String toEmail,
+      String userName,
+      String sport,
+      String courtName,
+      LocalDate date,
+      LocalTime time
+  ) {
+    String subject = "Oasis Club | Reserva confirmada";
+    String plainText = buildReservationConfirmedEmailText(userName, sport, courtName, date, time);
+    String htmlText = buildReservationConfirmedEmailHtml(userName, sport, courtName, date, time);
+    sendEmail(toEmail, subject, plainText, htmlText, "reservation-confirmed");
+  }
+
+  @Async
+  public void sendReservationCancelledEmail(
+      String toEmail,
+      String userName,
+      String sport,
+      String courtName,
+      LocalDate date,
+      LocalTime time
+  ) {
+    String subject = "Oasis Club | Reserva cancelada";
+    String plainText = buildReservationCancelledEmailText(userName, sport, courtName, date, time);
+    String htmlText = buildReservationCancelledEmailHtml(userName, sport, courtName, date, time);
+    sendEmail(toEmail, subject, plainText, htmlText, "reservation-cancelled");
   }
 
   private void sendEmail(String toEmail, String subject, String plainText, String htmlText, String type) {
@@ -90,6 +128,56 @@ public class EmailService {
         """.formatted(userName);
   }
 
+  private String buildReservationConfirmedEmailText(
+      String userName,
+      String sport,
+      String courtName,
+      LocalDate date,
+      LocalTime time
+  ) {
+    return """
+        OASIS CLUB
+        
+        Reserva confirmada
+
+        Hola, %s.
+
+        Tu reserva ha sido confirmada correctamente.
+
+        Deporte: %s
+        Pista: %s
+        Fecha: %s
+        Hora: %s
+
+        Te esperamos en el club.
+        """.formatted(userName, sport, courtName, formatReservationDate(date), formatReservationTime(time));
+  }
+
+  private String buildReservationCancelledEmailText(
+      String userName,
+      String sport,
+      String courtName,
+      LocalDate date,
+      LocalTime time
+  ) {
+    return """
+        OASIS CLUB
+        
+        Reserva cancelada
+
+        Hola, %s.
+
+        Te confirmamos que tu reserva ha sido cancelada correctamente.
+
+        Deporte: %s
+        Pista: %s
+        Fecha: %s
+        Hora: %s
+
+        Puedes crear una nueva reserva cuando quieras desde tu perfil.
+        """.formatted(userName, sport, courtName, formatReservationDate(date), formatReservationTime(time));
+  }
+
   private String buildResetEmailHtml(String resetLink) {
     String content = """
         <div style="text-align: center;">
@@ -138,6 +226,121 @@ public class EmailService {
         </div>
         """.formatted(userName);
     return wrapEmailLayout(content);
+  }
+
+  private String buildReservationConfirmedEmailHtml(
+      String userName,
+      String sport,
+      String courtName,
+      LocalDate date,
+      LocalTime time
+  ) {
+    String content = """
+        <div style="text-align: center;">
+          <h2 style="margin: 0 0 16px; font-size: 24px; font-weight: 300; letter-spacing: -0.02em; color: #18181b;">
+            Reserva confirmada
+          </h2>
+          <p style="margin: 0 0 28px; color: #52525b; font-size: 15px; line-height: 1.7; font-weight: 300;">
+            Hola, <strong>%s</strong>. Tu reserva en <strong>Oasis Club</strong> ha sido confirmada correctamente.
+          </p>
+          %s
+          <div style="margin: 36px 0;">
+            <span style="display: inline-block; border: 1px solid #022c22; color: #022c22; padding: 16px 40px; font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">
+              Reserva Activa
+            </span>
+          </div>
+          <p style="margin: 0; color: #a1a1aa; font-size: 13px; line-height: 1.6;">
+            Te esperamos en el club. Revisa tu perfil si necesitas consultar o gestionar tus reservas.
+          </p>
+        </div>
+        """.formatted(
+            escapeHtml(userName),
+            buildReservationDetailsHtml(sport, courtName, date, time)
+        );
+    return wrapEmailLayout(content);
+  }
+
+  private String buildReservationCancelledEmailHtml(
+      String userName,
+      String sport,
+      String courtName,
+      LocalDate date,
+      LocalTime time
+  ) {
+    String content = """
+        <div style="text-align: center;">
+          <h2 style="margin: 0 0 16px; font-size: 24px; font-weight: 300; letter-spacing: -0.02em; color: #18181b;">
+            Reserva cancelada
+          </h2>
+          <p style="margin: 0 0 28px; color: #52525b; font-size: 15px; line-height: 1.7; font-weight: 300;">
+            Hola, <strong>%s</strong>. Te confirmamos que tu reserva ha sido cancelada correctamente.
+          </p>
+          %s
+          <div style="margin: 36px 0;">
+            <span style="display: inline-block; border: 1px solid #a1a1aa; color: #52525b; padding: 16px 40px; font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">
+              Reserva Cancelada
+            </span>
+          </div>
+          <p style="margin: 0; color: #a1a1aa; font-size: 13px; line-height: 1.6;">
+            Puedes crear una nueva reserva cuando quieras desde tu perfil.
+          </p>
+        </div>
+        """.formatted(
+            escapeHtml(userName),
+            buildReservationDetailsHtml(sport, courtName, date, time)
+        );
+    return wrapEmailLayout(content);
+  }
+
+  private String buildReservationDetailsHtml(String sport, String courtName, LocalDate date, LocalTime time) {
+    return """
+        <div style="background-color: #f9fafb; border: 1px solid #f4f4f5; padding: 24px; text-align: left; margin: 0 0 8px;">
+          <table width="100%%" border="0" cellspacing="0" cellpadding="0">
+            %s
+            %s
+            %s
+            %s
+          </table>
+        </div>
+        """.formatted(
+            buildReservationDetailRow("Deporte", sport),
+            buildReservationDetailRow("Pista", courtName),
+            buildReservationDetailRow("Fecha", formatReservationDate(date)),
+            buildReservationDetailRow("Hora", formatReservationTime(time))
+        );
+  }
+
+  private String buildReservationDetailRow(String label, String value) {
+    return """
+        <tr>
+          <td style="padding: 10px 0; color: #71717a; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; border-bottom: 1px solid #e4e4e7;">
+            %s
+          </td>
+          <td align="right" style="padding: 10px 0; color: #022c22; font-size: 14px; font-weight: 600; border-bottom: 1px solid #e4e4e7;">
+            %s
+          </td>
+        </tr>
+        """.formatted(escapeHtml(label), escapeHtml(value));
+  }
+
+  private String formatReservationDate(LocalDate date) {
+    return date.format(RESERVATION_DATE_FORMATTER);
+  }
+
+  private String formatReservationTime(LocalTime time) {
+    return time.format(RESERVATION_TIME_FORMATTER);
+  }
+
+  private String escapeHtml(String value) {
+    if (value == null) {
+      return "";
+    }
+    return value
+        .replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace("\"", "&quot;")
+        .replace("'", "&#39;");
   }
 
   private String wrapEmailLayout(String content) {
