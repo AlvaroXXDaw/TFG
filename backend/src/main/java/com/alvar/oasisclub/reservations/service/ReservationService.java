@@ -1,5 +1,8 @@
 package com.alvar.oasisclub.reservations.service;
 
+import com.alvar.oasisclub.clients.entity.ClientEntity;
+import com.alvar.oasisclub.clients.service.ClientService;
+import com.alvar.oasisclub.common.email.EmailService;
 import com.alvar.oasisclub.courts.repository.CourtRepository;
 import com.alvar.oasisclub.reservations.dto.AvailabilitySlotResponse;
 import com.alvar.oasisclub.reservations.dto.CreateMaintenanceBlockRequest;
@@ -19,6 +22,8 @@ import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,10 +31,14 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 public class ReservationService {
 
+  private static final Logger log = LoggerFactory.getLogger(ReservationService.class);
+
   private final ReservationRepository reservationRepository;
   private final ReservationMapper reservationMapper;
   private final CourtRepository courtRepository;
   private final ScheduleSlotService scheduleSlotService;
+  private final ClientService clientService;
+  private final EmailService emailService;
 
   @Transactional(readOnly = true)
   public List<ReservationResponse> getReservations(String sport, String status, LocalDate date) {
@@ -88,6 +97,7 @@ public class ReservationService {
   @Transactional
   public ReservationResponse createConfirmedReservation(CreateReservationRequest request) {
     ReservationEntity saved = createReservationEntity(request, ReservationStatus.CONFIRMED);
+    sendReservationConfirmedEmail(saved);
     return reservationMapper.toResponse(saved);
   }
 
@@ -139,10 +149,9 @@ public class ReservationService {
 
   @Transactional
   public void deleteReservation(UUID id) {
-    if (!reservationRepository.existsById(id)) {
-      throw new ReservationNotFoundException("Reservation not found");
-    }
-    reservationRepository.deleteById(id);
+    ReservationEntity reservation = getEntityById(id);
+    reservationRepository.delete(reservation);
+    sendReservationCancelledEmail(reservation);
   }
 
   @Transactional
@@ -157,6 +166,7 @@ public class ReservationService {
         .ifPresent(reservation -> {
           if (reservation.getStatus() == ReservationStatus.PENDING) {
             reservation.setStatus(ReservationStatus.CONFIRMED);
+            sendReservationConfirmedEmail(reservation);
           }
         });
   }
@@ -211,6 +221,58 @@ public class ReservationService {
     return reservation.getStatus() == ReservationStatus.PENDING
         || reservation.getStatus() == ReservationStatus.CONFIRMED
         || reservation.getStatus() == ReservationStatus.MAINTENANCE;
+  }
+
+  private void sendReservationConfirmedEmail(ReservationEntity reservation) {
+    ClientEntity client = clientForNotification(reservation);
+    if (client == null) {
+      return;
+    }
+
+    emailService.sendReservationConfirmedEmail(
+        client.getEmail(),
+        client.getName(),
+        sportLabel(reservation.getSport()),
+        reservation.getCourt().getName(),
+        reservation.getReservationDate(),
+        reservation.getReservationTime()
+    );
+  }
+
+  private void sendReservationCancelledEmail(ReservationEntity reservation) {
+    ClientEntity client = clientForNotification(reservation);
+    if (client == null) {
+      return;
+    }
+
+    emailService.sendReservationCancelledEmail(
+        client.getEmail(),
+        client.getName(),
+        sportLabel(reservation.getSport()),
+        reservation.getCourt().getName(),
+        reservation.getReservationDate(),
+        reservation.getReservationTime()
+    );
+  }
+
+  private ClientEntity clientForNotification(ReservationEntity reservation) {
+    if (reservation.getClientId() == null || reservation.getStatus() == ReservationStatus.MAINTENANCE) {
+      return null;
+    }
+
+    try {
+      return clientService.getEntityById(reservation.getClientId());
+    } catch (RuntimeException ex) {
+      log.warn("Reservation email skipped because client {} was not found", reservation.getClientId());
+      return null;
+    }
+  }
+
+  private String sportLabel(SportType sport) {
+    return switch (sport) {
+      case FUTBOL -> "Fútbol";
+      case PADEL -> "Pádel";
+    };
   }
 }
 
