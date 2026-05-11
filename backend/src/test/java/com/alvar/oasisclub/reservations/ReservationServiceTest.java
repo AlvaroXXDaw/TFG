@@ -8,6 +8,8 @@ import static org.mockito.Mockito.when;
 
 import com.alvar.oasisclub.courts.entity.CourtEntity;
 import com.alvar.oasisclub.courts.repository.CourtRepository;
+import com.alvar.oasisclub.clients.service.ClientService;
+import com.alvar.oasisclub.common.email.EmailService;
 import com.alvar.oasisclub.reservations.dto.AvailabilitySlotResponse;
 import com.alvar.oasisclub.reservations.dto.CreateReservationRequest;
 import com.alvar.oasisclub.reservations.dto.ReservationResponse;
@@ -44,6 +46,12 @@ class ReservationServiceTest {
 
   @Mock
   private ScheduleSlotService scheduleSlotService;
+
+  @Mock
+  private ClientService clientService;
+
+  @Mock
+  private EmailService emailService;
 
   @InjectMocks
   private ReservationService reservationService;
